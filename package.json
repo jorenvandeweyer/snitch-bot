@@ -1,0 +1,26 @@
+{
+  "name": "listen-bot",
+  "version": "1.0.0",
+  "description": "A discord bot that listens for a string in a message a mentions you on a hit",
+  "main": "src/index.js",
+  "dependencies": {
+    "discord.js": "^11.3.2",
+    "mysql": "^2.15.0",
+    "nodemon": "^1.17.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jorenvandeweyer/listen-bot.git"
+  },
+  "author": "Joren Vandeweyer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jorenvandeweyer/listen-bot/issues"
+  },
+  "homepage": "https://github.com/jorenvandeweyer/listen-bot#readme"
+}

@@ -14,9 +14,9 @@ module.exports = {
         let message;
 
         if (result.deleted) {
-            message = this.channel.send(`Removed the word **${keyword}** succesfully`);
+            message = await this.channel.send(`Removed the word **${keyword}** succesfully`);
         } else {
-            message = this.channel.send(`The word **${keyword}** is not on your trigger list`);
+            message = await this.channel.send(`The word **${keyword}** is not on your trigger list`);
         }
 
         setTimeout(() => {

@@ -13,9 +13,9 @@ module.exports = {
         let message;
 
         if (result.length) {
-            message = this.channel.send(`List of your triggers:\n${result.map(row => row.keyword).join(", ")}`);
+            message = await this.channel.send(`List of your triggers:\n${result.map(row => row.keyword).join(", ")}`);
         } else {
-            message = this.channel.send(`You don't have any triggers`);
+            message = await this.channel.send(`You don't have any triggers`);
         }
 
         setTimeout(() => {

@@ -31,8 +31,9 @@ class RichMessage extends EventEmitter {
         const guild_id = this.channel.guild.id;
         const words = this.content.split(" ");
 
-        words.forEach((word) => {
-            const list = Cache.triggers.get(guild_id);
+        const list = Cache.triggers.get(guild_id);
+
+        list && words.forEach((word) => {
             if (list.has(word)) {
                 const users = list.get(word);
                 users.forEach((user) => {

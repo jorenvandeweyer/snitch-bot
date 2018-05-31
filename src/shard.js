@@ -14,4 +14,8 @@ client.on('message', msg => {
     MessageHandler(msg)
 });
 
+Client.bot.on("guildCreate", () => {
+    discordbots(client);
+});
+
 client.login();

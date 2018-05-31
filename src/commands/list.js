@@ -13,14 +13,11 @@ module.exports = {
         let message;
 
         if (result.length) {
-            message = await this.channel.send(`List of your triggers:\n${result.map(row => row.keyword).join(", ")}`);
+            message = await this.member.send(`List of your triggers:\n${result.map(row => row.keyword).join(", ")}`);
         } else {
-            message = await this.channel.send(`You don't have any triggers`);
+            message = await this.member.send(`You don't have any triggers`);
         }
 
-        setTimeout(() => {
-            this.original.delete();
-            message.delete();
-        }, 3000);
+        this.original.delete();
     }
 };

@@ -13,5 +13,7 @@ Every time someone says the word "cookie", the bot will send you a DM with the f
 ## Commands
 
 `listen!add [word]`: Add a word to your trigger list
+
 `listen!remove [word]`: Remove a word from your trigger list
+
 `listen!list`: Show all triggers in your trigger list

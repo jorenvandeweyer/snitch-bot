@@ -6,7 +6,8 @@
   "dependencies": {
     "discord.js": "^11.3.2",
     "mysql": "^2.15.0",
-    "nodemon": "^1.17.5"
+    "nodemon": "^1.17.5",
+    "request": "^2.87.0"
   },
   "devDependencies": {},
   "scripts": {

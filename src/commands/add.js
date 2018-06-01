@@ -1,4 +1,5 @@
 const cache = require("../utils/cache");
+const Logger = require("../utils/logger");
 
 module.exports = {
     name: "add",
@@ -19,7 +20,7 @@ module.exports = {
         }
 
         setTimeout(() => {
-            this.original.delete();
+            this.original.delete().catch(e => Logger.error(e));
             message.delete();
         }, 3000);
     }

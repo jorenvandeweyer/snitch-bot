@@ -1,4 +1,5 @@
 const cache = require("../utils/cache");
+const Logger = require("../utils/logger");
 
 module.exports = {
     name: "list",
@@ -18,6 +19,6 @@ module.exports = {
             message = await this.member.send(`You don't have any triggers`);
         }
 
-        this.original.delete();
+        this.original.delete().catch(e => Logger.error(e));
     }
 };

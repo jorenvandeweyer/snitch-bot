@@ -34,7 +34,7 @@ module.exports = async (msg) => {
 
         const embed = new RichEmbed({
             title: "A word that you are following was mentioned",
-            description: `**${author.tag}** mentioned the word **${info.word}** in **${channel}** (${guild.name})\n\nWord: ${info.word}\nServer: ${guild.name}\nChannel: ${channel}\nMentioner: ${author.tag}`,
+            description: `**${author}** mentioned the word **${info.word}** in **${channel}** (${guild.name})\n\nWord: ${info.word}\nServer: ${guild.name}\nChannel: ${channel}\nMentioner: ${author}`,
             color: parseInt("FF0000", 16),
         });
         user.send(embed);

@@ -4,15 +4,15 @@ module.exports = {
     name: "help",
     usage: "",
     args: 0,
-    async execute () {
+    async execute (msg) {
         const embed = new RichEmbed({
             title: "Help",
             color: parseInt("FF0000", 16),
             description: "**listen!add [word]**\n**listen!remove [word]**\n**listen!list**"
         });
 
-        this.member.send(embed);
+        msg.member.send(embed);
 
-        this.original.delete();
+        msg.original.delete();
     }
 };

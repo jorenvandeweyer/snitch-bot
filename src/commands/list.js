@@ -5,20 +5,20 @@ module.exports = {
     name: "list",
     usage: "",
     args: 0,
-    async execute () {
-        const guild = this.channel.guild.id;
-        const user = this.author.id;
+    async execute (msg) {
+        const guild = msg.channel.guild.id;
+        const user = msg.author.id;
 
         let result = await cache.getTrigger(guild, user);
 
         let message;
 
         if (result.length) {
-            message = await this.member.send(`List of your triggers:\n${result.map(row => row.keyword).join(", ")}`);
+            message = await msg.member.send(`List of your triggers:\n${result.map(row => row.keyword).join(", ")}`);
         } else {
-            message = await this.member.send(`You don't have any triggers`);
+            message = await msg.member.send(`You don't have any triggers`);
         }
 
-        this.original.delete().catch(e => Logger.error(e));
+        msg.original.delete().catch(e => Logger.error(e));
     }
 };

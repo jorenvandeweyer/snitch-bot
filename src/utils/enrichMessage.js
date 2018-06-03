@@ -13,7 +13,6 @@ function newCommand(msg) {
     const command = commands.get(command_name);
 
     command.params = params;
-    command.execute = command.execute.bind(msg);
 
     return command;
 }

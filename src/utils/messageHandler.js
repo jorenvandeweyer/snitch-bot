@@ -12,7 +12,7 @@ module.exports = async (msg) => {
 
     if (richMessage.isCommand) {
         if (richMessage.command.args <= richMessage.command.params.length) {
-            await richMessage.command.execute();
+            await richMessage.command.execute(msg);
         } else {
             await msg.channel.send(`This command requires atleast ${richMessage.command.args} argument${richMessage.command.args === 1 ? "" : "s"}`);
         }

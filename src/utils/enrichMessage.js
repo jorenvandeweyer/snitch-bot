@@ -28,7 +28,7 @@ class RichMessage extends EventEmitter {
         if (this.channel.type !== "text") return;
 
         const guild_id = this.channel.guild.id;
-        const words = this.content.split(" ");
+        const words = this.content.split(" ").map(word => word.toLowerCase());
 
         const list = Cache.triggers.get(guild_id);
 

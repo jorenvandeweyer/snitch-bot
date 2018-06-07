@@ -1,3 +1,6 @@
+[![Discord Bots](https://discordbots.org/api/widget/status/452042500828299264.svg)](https://discordbots.org/bot/452042500828299264) [![Discord Bots](https://discordbots.org/api/widget/servers/452042500828299264.svg)](https://discordbots.org/bot/452042500828299264) [![Discord Bots](https://discordbots.org/api/widget/lib/452042500828299264.svg)](https://discordbots.org/bot/452042500828299264) [![Discord Bots](https://discordbots.org/api/widget/owner/452042500828299264.svg)](https://discordbots.org/bot/452042500828299264)
+
+
 # listen-bot
 
 ## Description

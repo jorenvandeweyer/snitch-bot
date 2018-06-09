@@ -9,11 +9,12 @@ addDirToCommands(`${__dirname}/../commands`);
 
 function newCommand(msg) {
     const params = msg.content.slice(msg.prefix.length).split(" ");
-    const command_name = params.shift().toLowerCase();
+    const command_name = getCommandName(params);
     const command = commands.get(command_name);
 
-    command.params = params;
+    if (!command) return false;
 
+    command.params = params;
     return command;
 }
 
@@ -57,7 +58,7 @@ module.exports = async (msg) => {
 
     if (richMessage.isCommand) {
         richMessage.command = newCommand(richMessage);
-        if (!richMessage.command.execute) {
+        if (!richMessage.command) {
             richMessage.isCommand = false;
         }
         if (richMessage.member == null) {
@@ -76,5 +77,14 @@ function addDirToCommands(path) {
             let command = require(`${path}/${file}`);
             commands.set(command.name, command);
         }
+    }
+}
+
+function getCommandName(params) {
+    if (params[0]) {
+        return params.shift().toLowerCase();
+    } else {
+        params.shift();
+        return params[0] ? "add" : "help";
     }
 }

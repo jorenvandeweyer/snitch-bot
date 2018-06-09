@@ -7,6 +7,7 @@
 
 Word Notifications.
 
+![Notification](https://i.imgur.com/xDFQ7zo.png)
 This bot will notify you in a direct message when someone said a certain word.
 
 So for example:
@@ -22,3 +23,7 @@ Every time someone says the word "cookie", the bot will send you a DM with the f
 `listen!remove [word]`: Remove a word from your trigger list
 
 `listen!list`: Show all triggers in your trigger list
+
+`listen!help`: Gives you all available commands
+
+`listen!invite`: Gives you the invite URL for this bot

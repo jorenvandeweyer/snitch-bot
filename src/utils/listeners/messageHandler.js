@@ -1,5 +1,5 @@
-const EnrichMessage = require("./enrichMessage");
-const Logger = require("../utils/logger");
+const EnrichMessage = require("../enrichMessage");
+const Logger = require("../logger");
 const { RichEmbed } = require("discord.js");
 
 module.exports = async (msg) => {
@@ -19,10 +19,10 @@ module.exports = async (msg) => {
     }
 
     richMessage.on("hit", async (info) => {
-        Logger.log(`Notified member`);
         const guild = info.msg.channel.guild;
         const channel = info.msg.channel;
         const author = info.msg.author;
+        Logger.log(`Notified member: "${guild} | ${author.tag} | ${info.word}"`);
 
         let user;
 
@@ -32,12 +32,23 @@ module.exports = async (msg) => {
             user = await guild.fetchMember(info.user);
         }
 
+        let messageContent = `**${author}** mentioned the word **${info.word}** in **${channel}** (${guild.name})`;
+        messageContent += `\n\n\`${info.msg.content}\``;
+        messageContent += `\n\nGo to channel: ${channel}`;
+        // messageContent += `\n\nWord: ${info.word}\nServer: ${guild.name}\nChannel: ${channel}\nMentioner: ${author}`;
+        messageContent += `\n\nReact with ❌ to remove this word from your trigger list:`;
+
         const embed = new RichEmbed({
             title: "A word that you are following was mentioned",
-            description: `**${author}** mentioned the word **${info.word}** in **${channel}** (${guild.name})\n\nWord: ${info.word}\nServer: ${guild.name}\nChannel: ${channel}\nMentioner: ${author}`,
+            description: messageContent,
             color: parseInt("FF0000", 16),
+            footer: {
+                text: `${info.word} ${guild.id}`,
+            },
+            timestamp: info.msg.original.createdAt,
         });
-        user.send(embed);
+        const message = await user.send(embed);
+        await message.react("❌");
     });
 
     richMessage.search();

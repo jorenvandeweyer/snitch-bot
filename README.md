@@ -5,6 +5,8 @@
 
 ## Description
 
+Word Notifications.
+
 This bot will notify you in a direct message when someone said a certain word.
 
 So for example:

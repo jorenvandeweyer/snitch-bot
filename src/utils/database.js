@@ -7,7 +7,8 @@ const pool = mysql.createPool({
     host: mysql_host,
     user: mysql_user,
     password: mysql_pswd,
-    database: mysql_db
+    database: mysql_db,
+    charset : 'utf8mb4'
 });
 
 function getConnection() {

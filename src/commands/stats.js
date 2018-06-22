@@ -7,13 +7,15 @@ module.exports = {
     usage: "",
     args: 0,
     async execute (msg) {
-        const guild = msg.channel.guild.id;
-        const result = await db.query("SELECT COUNT(*) AS total FROM triggers");
+        const client = msg.original.client;
 
-        let members = 0;
-        for (let guild of msg.original.client.guilds) {
-            members+=guild[1].memberCount;
-        }
+        const result = await db.query("SELECT COUNT(*) AS total FROM triggers");
+        const members_all = await client.broadcast({ request: "members" });
+        const guilds_all = await client.broadcast({ request: "guilds" });
+
+        let members, guilds;
+        if (members_all.success) members = members_all.results.map(result => result.data.members).reduce((total, num) => total + num);
+        if (guilds_all.success) guilds = guilds_all.results.map(result => result.data.guilds).reduce((total, num) => total + num);
 
         const embed = new RichEmbed({
             title: "💾 Stats 💾",
@@ -26,7 +28,7 @@ module.exports = {
                 },
                 {
                     name: "👥 Guilds 👥",
-                    value: `Listening in **${msg.original.client.guilds.size}** guilds!`,
+                    value: `Listening in **${guilds}** guilds!`,
                     inline: true,
                 },
                 {

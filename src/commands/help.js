@@ -8,7 +8,7 @@ module.exports = {
         const embed = new RichEmbed({
             title: "Help",
             color: parseInt("FF0000", 16),
-            description: "**listen!add [word]**\n**listen!remove [word]**\n**listen!list**"
+            description: "**\nlisten!add [word]**\n\n**listen!remove [word]**\n\n**listen!list**\n\n**listen!invite**\n\n**listen!stats**"
         });
 
         msg.member.send(embed);

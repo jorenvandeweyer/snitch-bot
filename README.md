@@ -27,3 +27,5 @@ Every time someone says the word "cookie", the bot will send you a DM with the f
 `listen!help`: Gives you all available commands
 
 `listen!invite`: Gives you the invite URL for this bot
+
+`listen!stats`: Show some fancy stats about the bot

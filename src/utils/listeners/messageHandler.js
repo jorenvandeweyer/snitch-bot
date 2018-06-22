@@ -1,12 +1,14 @@
 const EnrichMessage = require("../enrichMessage");
 const Logger = require("../logger");
 const { RichEmbed } = require("discord.js");
+const cache = require("../cache");
 
 module.exports = async (msg) => {
-    if (msg.channel.type !== "text") return;
-    const Client = msg.client;
-
-    if (Client.user.id === msg.author.id) return;
+    if (msg.client.user.id === msg.author.id) return;
+    if (msg.channel.type !== "text") {
+        msg.reply("Please use the commands in a guild.");
+        return;
+    }
 
     const richMessage = await EnrichMessage(msg);
 
@@ -47,8 +49,13 @@ module.exports = async (msg) => {
             },
             timestamp: info.msg.original.createdAt,
         });
-        const message = await user.send(embed);
-        await message.react("❌");
+        try {
+            const message = await user.send(embed);
+            await message.react("❌");
+        } catch (e) {
+            const triggers = await cache.getTrigger(guild.id, user.id);
+            triggers.forEach(trigger => cache.delTrigger(guild.id, user.id, trigger.keyword));
+        }
     });
 
     richMessage.search();

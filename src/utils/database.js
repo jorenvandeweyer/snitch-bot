@@ -120,6 +120,7 @@ async function allTriggers() {
 setup();
 
 module.exports = {
+    query,
     setTrigger,
     getTrigger,
     delTrigger,

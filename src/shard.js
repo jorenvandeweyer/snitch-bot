@@ -20,5 +20,6 @@ client.on("guildCreate", () => {
 
 client.on('message', MessageHandler);
 client.on("messageReactionAdd", ReactionHandler);
+client.on("error", e => Logger.error(`Shard[${client.shard.id}]:Client error: ${e.message}`));
 
 client.login();

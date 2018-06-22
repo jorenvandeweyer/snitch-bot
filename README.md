@@ -8,6 +8,7 @@
 Word Notifications with emoji support! 🎉.
 
 ![Notification](https://i.imgur.com/xDFQ7zo.png)
+
 This bot will notify you in a direct message when someone said a certain word.
 
 So for example:

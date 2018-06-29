@@ -26,6 +26,8 @@ class RichMessage extends EventEmitter {
     }
 
     async search() {
+        const hits = [];
+
         if (this.channel.type !== "text") return;
 
         const guild_id = this.channel.guild.id;
@@ -34,8 +36,11 @@ class RichMessage extends EventEmitter {
         const list = Cache.triggers.get(guild_id);
 
         list && words.forEach((word) => {
-            if (list.has(word)) {
+            if (list.has(word) && !hits.includes(word)) {
+                hits.push(word);
+                
                 const users = list.get(word);
+
                 users.forEach((user) => {
                     this.emit("hit", {
                         msg: this,

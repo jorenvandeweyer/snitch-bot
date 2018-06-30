@@ -3,6 +3,7 @@ const Logger = require("../utils/logger");
 
 module.exports = {
     name: "add",
+    guildOnly: true,
     usage: "[word]",
     args: 1,
     async execute (msg) {

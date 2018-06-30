@@ -7,7 +7,9 @@
 
 Word Notifications with emoji support! 🎉.
 
-![Notification](https://i.imgur.com/xDFQ7zo.png)
+Go **directly** to this particular message with **one click**!
+
+![Notification](https://i.am-a.ninja/a0214c.png)
 
 This bot will notify you in a direct message when someone said a certain word.
 

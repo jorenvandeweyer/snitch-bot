@@ -8,12 +8,11 @@ module.exports = async (msg) => {
 
     const richMessage = await EnrichMessage(msg);
 
-    if (msg.channel.type !== "text" && richMessage.isCommand && richMessage.command.name !== "invite" && richMessage.command.name !== "help") {
+    if (msg.channel.type !== "text" && richMessage.command.guildOnly) {
         msg.reply("Please use the commands in a guild.");
         return;
     }
-
-
+    
     if (richMessage.isCommand) {
         if (richMessage.command.args <= richMessage.command.params.length) {
             await richMessage.command.execute(richMessage);

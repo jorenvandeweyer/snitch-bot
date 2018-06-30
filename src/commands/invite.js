@@ -13,6 +13,8 @@ module.exports = {
         });
 
         msg.author.send(embed);
-        msg.original.delete();
+        if (msg.original.deletable) {
+            msg.original.delete();
+        }
     }
 };

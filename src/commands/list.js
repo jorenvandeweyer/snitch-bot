@@ -19,6 +19,8 @@ module.exports = {
             message = await msg.member.send(`You don't have any triggers`);
         }
 
-        msg.original.delete().catch(e => Logger.error(e));
+        if (msg.original.deletable) {
+            msg.original.delete();
+        }
     }
 };

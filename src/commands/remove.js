@@ -21,7 +21,9 @@ module.exports = {
         }
 
         setTimeout(() => {
-            msg.original.delete().catch(e => Logger.error(e));
+            if (msg.original.deletable) {
+                msg.original.delete();
+            }
             message.delete();
         }, 3000);
     }

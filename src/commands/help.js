@@ -11,8 +11,7 @@ module.exports = {
             description: "**\nlisten!add [word]**\n\n**listen!remove [word]**\n\n**listen!list**\n\n**listen!invite**\n\n**listen!stats**"
         });
 
-        msg.member.send(embed);
-
+        msg.author.send(embed);
         msg.original.delete();
     }
 };

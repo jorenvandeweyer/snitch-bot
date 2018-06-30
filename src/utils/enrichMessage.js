@@ -38,15 +38,25 @@ class RichMessage extends EventEmitter {
         list && words.forEach((word) => {
             if (list.has(word) && !hits.includes(word)) {
                 hits.push(word);
-                
+
                 const users = list.get(word);
 
-                users.forEach((user) => {
-                    this.emit("hit", {
-                        msg: this,
-                        word,
-                        user,
-                    });
+                users.forEach(async (user) => {
+                    const guild = this.channel.guild;
+                    let member;
+                    if (guild.members.has(user)) {
+                        member = guild.members.get(user);
+                    } else {
+                        member = await guild.fetchMember(user);
+                    }
+
+                    if (member.permissionsIn(this.channel).has("VIEW_CHANNEL")) {
+                        this.emit("hit", {
+                            msg: this,
+                            word,
+                            member,
+                        });
+                    }
                 });
             }
         });
@@ -66,7 +76,7 @@ module.exports = async (msg) => {
         if (!richMessage.command) {
             richMessage.isCommand = false;
         }
-        if (richMessage.member == null) {
+        if (richMessage.member == null && msg.channel.type === "text") {
             richMessage.member = await richMessage.guild.fetchMember(richMessage.author.id);
         }
     }

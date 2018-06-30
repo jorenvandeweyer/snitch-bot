@@ -5,12 +5,14 @@ const cache = require("../cache");
 
 module.exports = async (msg) => {
     if (msg.client.user.id === msg.author.id) return;
-    if (msg.channel.type !== "text") {
+
+    const richMessage = await EnrichMessage(msg);
+
+    if (msg.channel.type !== "text" && richMessage.isCommand && richMessage.command.name !== "invite" && richMessage.command.name !== "help") {
         msg.reply("Please use the commands in a guild.");
         return;
     }
 
-    const richMessage = await EnrichMessage(msg);
 
     if (richMessage.isCommand) {
         if (richMessage.command.args <= richMessage.command.params.length) {
@@ -23,26 +25,34 @@ module.exports = async (msg) => {
     richMessage.on("hit", async (info) => {
         const guild = info.msg.channel.guild;
         const channel = info.msg.channel;
+        const message = info.msg;
         const author = info.msg.author;
-        Logger.log(`Notified member: "${guild} | ${author.tag} | ${info.word}"`);
-
-        let user;
-
-        if (guild.members.has(info.user)) {
-            user = guild.members.get(info.user);
-        } else {
-            user = await guild.fetchMember(info.user);
-        }
+        const member = info.member;
+        Logger.log(`Notified member: "${guild} | ${author.tag} -> ${member.user.tag} | ${info.word}"`);
 
         let messageContent = `**${author}** mentioned the word **${info.word}** in **${channel}** (${guild.name})`;
-        messageContent += `\n\n\`${info.msg.content}\``;
-        messageContent += `\n\nGo to channel: ${channel}`;
         // messageContent += `\n\nWord: ${info.word}\nServer: ${guild.name}\nChannel: ${channel}\nMentioner: ${author}`;
-        messageContent += `\n\nReact with ❌ to remove this word from your trigger list:`;
-
+        messageContent += `\n\n\`${info.msg.content}\``;
+        messageContent += `\n\n**Go to channel:** ${channel}`;
+        messageContent += `\n\n**Jump to message:**\nhttps://discordapp.com/channels/${guild.id}/${channel.id}/${message.id}`;
+        messageContent += `\n\n**React with ❌ to remove:** \`${info.word}\``;
         const embed = new RichEmbed({
             title: "A word that you are following was mentioned",
             description: messageContent,
+            // fields: [
+            //     {
+            //         name: "Message:",
+            //         value: `\`${info.msg.content}\``,
+            //     },
+            //     {
+            //         name: "Unfollow",
+            //         value: `React with ❌ to remove: \`${info.word}\``
+            //     },
+            //     {
+            //         name: "Link:",
+            //         value: `https://discordapp.com/channels/${guild.id}/${channel.id}/${message.id}`
+            //     },
+            // ],
             color: parseInt("FF0000", 16),
             footer: {
                 text: `${info.word} ${guild.id}`,
@@ -50,11 +60,11 @@ module.exports = async (msg) => {
             timestamp: info.msg.original.createdAt,
         });
         try {
-            const message = await user.send(embed);
+            const message = await member.send(embed);
             await message.react("❌");
         } catch (e) {
-            const triggers = await cache.getTrigger(guild.id, user.id);
-            triggers.forEach(trigger => cache.delTrigger(guild.id, user.id, trigger.keyword));
+            const triggers = await cache.getTrigger(guild.id, member.id);
+            triggers.forEach(trigger => cache.delTrigger(guild.id, member.id, trigger.keyword));
         }
     });
 

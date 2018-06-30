@@ -7,8 +7,15 @@ module.exports = async (client, message) => {
                 guilds: client.guilds.size
             };
         } else if (message.request === "members") {
+            const guilds = client.guilds.map(guild => guild.memberCount);
+            let members = 0;
+
+            if (guilds.length) {
+                members = guilds.reduce((total, num) => total + num);
+            }
+            
             data = {
-                members: client.guilds.map(guild => guild.memberCount).reduce((total, num) => total + num)
+                members
             }
         }
 

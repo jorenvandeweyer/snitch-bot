@@ -9,7 +9,7 @@ const client = new Discord.Client();
 process.on("message", message => shardBroadcastHelper(client, message));
 
 client.on('ready', () => {
-    Logger.info(`Logged in as ${client.user.tag}!`);
+    Logger.success(`Shard[${client.shard.id}]:Ready!`)
     discordbots(client);
     client.user.setActivity("your messages | listen!help", {
         type: "WATCHING"

@@ -6,8 +6,7 @@ const manager = new ShardingManager("./src/shard.js", {
     token,
 });
 
-manager.spawn();
-manager.on("launch", shard => Logger.success(`Shard[X]:[+]Launched Shard[${shard.id}]`));
+manager.on("launch", shard => Logger.info(`Shard[X]:[+]Launched Shard[${shard.id}]`));
 
 manager.on("message", (shard, message) => {
     if (message && (message.type === "broadcast-request" || message.type === "broadcast-result")) return;
@@ -26,6 +25,8 @@ manager.on("message", async (shard, message) => {
         });
     }
 });
+
+manager.spawn();
 
 function broadcast(shard, message) {
     return new Promise(async (resolve, reject) => {

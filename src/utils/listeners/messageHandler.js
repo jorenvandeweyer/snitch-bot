@@ -8,13 +8,11 @@ module.exports = async (msg) => {
 
     const richMessage = await EnrichMessage(msg);
 
-    if (msg.channel.type !== "text" && richMessage.command.guildOnly) {
-        msg.reply("Please use the commands in a guild.");
-        return;
-    }
-    
     if (richMessage.isCommand) {
-        if (richMessage.command.args <= richMessage.command.params.length) {
+        if (msg.channel.type !== "text" && richMessage.command.guildOnly) {
+            msg.reply("Please use the commands in a guild.");
+            return;
+        } else if (richMessage.command.args <= richMessage.command.params.length) {
             await richMessage.command.execute(richMessage);
         } else {
             await msg.channel.send(`This command requires atleast ${richMessage.command.args} argument${richMessage.command.args === 1 ? "" : "s"}`);
@@ -27,7 +25,7 @@ module.exports = async (msg) => {
         const message = info.msg;
         const author = info.msg.author;
         const member = info.member;
-        Logger.log(`Notified member: "${guild} | ${author.tag} -> ${member.user.tag} | ${info.word}"`);
+        Logger.log(`Shard[${msg.client.shard.id}]:Notified member: "${guild} | ${author.tag} -> ${member.user.tag} | ${info.word}"`);
 
         let messageContent = `**${author}** mentioned the word **${info.word}** in **${channel}** (${guild.name})`;
         // messageContent += `\n\nWord: ${info.word}\nServer: ${guild.name}\nChannel: ${channel}\nMentioner: ${author}`;

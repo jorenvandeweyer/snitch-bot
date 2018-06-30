@@ -1,5 +1,4 @@
 const cache = require("../utils/cache");
-const Logger = require("../utils/logger");
 
 module.exports = {
     name: "add",

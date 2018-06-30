@@ -11,7 +11,7 @@ module.exports = (client) => {
         },
         json: true,
         body: {"server_count": client.guilds.size}
-    }).catch((err) => Logger.error(`Shard[?]: discordbotapi error?`));
+    }).catch((err) => Logger.error(`Shard[${client.shard.id}]: discordbotapi error?`));
 
     post(`https://discordbots.org/api/bots/${client.user.id}/stats`, {
         headers : {
@@ -19,5 +19,5 @@ module.exports = (client) => {
         },
         json: true,
         body: {"server_count": client.guilds.size}
-    }).catch((err) => Logger.error(`Shard[?]: discordbotapi error?`));
+    }).catch((err) => Logger.error(`Shard[${client.shard.id}]: discordbotapi error?`));
 };

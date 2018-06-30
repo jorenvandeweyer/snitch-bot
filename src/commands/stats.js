@@ -1,5 +1,4 @@
 const db = require("../utils/database");
-const Logger = require("../utils/logger");
 const { RichEmbed } = require("discord.js");
 
 module.exports = {

@@ -41,6 +41,17 @@ async function delTrigger(guild, user, keyword) {
     return { deleted: false };
 }
 
+async function delTriggersOf(guild, user) {
+    db.delTriggersOf(guild, user)
+    if (triggers.has(guild)) {
+        triggers.get(guild).forEach((users, key) => {
+            if (users.includes(user)) {
+                users.splice(users.indexOf(user), 1);
+            }
+        });
+    }
+}
+
 async function build() {
     const table = await db.allTriggers();
 
@@ -64,5 +75,6 @@ module.exports = {
     setTrigger,
     getTrigger,
     delTrigger,
+    delTriggersOf,
     triggers,
 };

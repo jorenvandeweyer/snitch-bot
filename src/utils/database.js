@@ -113,8 +113,19 @@ async function delTrigger(guild, user, keyword) {
     return await query("DELETE FROM triggers WHERE guild_id = ? AND user_id = ? AND keyword_id = ?", [guild_id, user_id, keyword_id]);
 }
 
+async function delTriggersOf(guild, user) {
+    const guild_id = await getGuild(guild);
+    const user_id = await getUser(user);
+
+    return await query("DELETE FROM triggers WHERE guild_id = ? AND user_id = ?", [guild_id, user_id]);
+}
+
 async function allTriggers() {
     return await query("SELECT keywords.keyword, users.user, guilds.guild FROM triggers INNER JOIN keywords ON keywords.keyword_id = triggers.keyword_id INNER JOIN users ON users.user_id = triggers.user_id INNER JOIN guilds ON guilds.guild_id = triggers.guild_id");
+}
+
+async function getMagnitudeKeywords() {
+    return await query("SELECT keyword, COUNT(*) AS magnitude FROM triggers INNER JOIN keywords ON triggers.keyword_id = keywords.keyword_id GROUP BY triggers.keyword_id ORDER BY magnitude DESC");
 }
 
 setup();
@@ -124,5 +135,6 @@ module.exports = {
     setTrigger,
     getTrigger,
     delTrigger,
+    delTriggersOf,
     allTriggers,
 };

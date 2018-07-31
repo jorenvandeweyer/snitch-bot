@@ -47,10 +47,13 @@ class RichMessage extends EventEmitter {
                     if (guild.members.has(user)) {
                         member = guild.members.get(user);
                     } else {
-                        member = await guild.fetchMember(user);
+                        member = await guild.fetchMember(user).catch(() => {
+                            Cache.delTriggersOf(guild_id, user);
+                            return null;
+                        });
                     }
 
-                    if (member.permissionsIn(this.channel).has("VIEW_CHANNEL")) {
+                    if (member && member.permissionsIn(this.channel).has("VIEW_CHANNEL")) {
                         this.emit("hit", {
                             msg: this,
                             word,

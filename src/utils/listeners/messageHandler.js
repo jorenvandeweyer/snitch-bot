@@ -2,10 +2,11 @@ const EnrichMessage = require("../enrichMessage");
 const Logger = require("../logger");
 const { RichEmbed } = require("discord.js");
 const cache = require("../cache");
+const Stats = require("../metrics/stats");
 
 module.exports = async (msg) => {
     if (msg.client.user.id === msg.author.id) return;
-
+    Stats.update("messages");
     const richMessage = await EnrichMessage(msg);
 
     if (richMessage.isCommand) {
@@ -20,6 +21,7 @@ module.exports = async (msg) => {
     }
 
     richMessage.on("hit", async (info) => {
+        Stats.update("hits");
         const guild = info.msg.channel.guild;
         const channel = info.msg.channel;
         const message = info.msg;

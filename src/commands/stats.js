@@ -1,6 +1,6 @@
 const db = require("../utils/database");
-const Stats = require("../utils/metrics/stats");
 const { RichEmbed } = require("discord.js");
+
 module.exports = {
     name: "stats",
     usage: "",
@@ -33,18 +33,8 @@ module.exports = {
                 {
                     name: "👤 Users 👤",
                     value: `Listening to **${members}** users!`,
-                    inline: true,
+                    inline: false,
                 },
-                {
-                    name: "📩 Messages/minute 📩",
-                    value: Stats.get("messages"),
-                    inline: true,
-                },
-                {
-                    name: "✉️ People notified/minute ✉️",
-                    value: Stats.get("hits"),
-                    inline: true,
-                }
             ]
         });
 

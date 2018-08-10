@@ -4,6 +4,7 @@ const { RichEmbed } = require("discord.js");
 const cache = require("../cache");
 
 module.exports = async (msg) => {
+    msg.client.metrics.incM();
     if (msg.client.user.id === msg.author.id) return;
     const richMessage = await EnrichMessage(msg);
 
@@ -19,6 +20,7 @@ module.exports = async (msg) => {
     }
 
     richMessage.on("hit", async (info) => {
+        msg.client.metrics.incH();
         const guild = info.msg.channel.guild;
         const channel = info.msg.channel;
         const message = info.msg;

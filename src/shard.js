@@ -5,7 +5,10 @@ const MemberHandler = require("./utils/listeners/memberHandler");
 const Logger = require("./utils/logger");
 const discordbots = require("./utils/discordbots");
 const shardBroadcastHelper = require("./utils/shardBroadcastHelper");
+const { ShardMetrics } = require("./metrics/index");
+
 const client = new Discord.Client();
+client.metrics = ShardMetrics();
 
 process.on("message", message => shardBroadcastHelper(client, message));
 

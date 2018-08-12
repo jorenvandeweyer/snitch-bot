@@ -1,7 +1,7 @@
 const cache = require("../utils/cache");
 
 module.exports = {
-    name: "add",
+    name: "addregex",
     guildOnly: true,
     usage: "[word]",
     args: 1,
@@ -10,13 +10,13 @@ module.exports = {
         const user = msg.author.id;
         const keyword = msg.command.params[0].toLowerCase();
 
-        let result = await cache.setTrigger(guild, user, keyword, false);
+        let result = await cache.setTrigger(guild, user, keyword, true);
 
         let message;
         if (result.added) {
-            message = await msg.channel.send(`Added the word **${keyword}** succesfully`);
+            message = await msg.channel.send(`Added the RegExp **${keyword}** succesfully`);
         } else if (result.exists) {
-            message = await msg.channel.send(`The word **${keyword}** is already in your trigger list`);
+            message = await msg.channel.send(`The RegExp **${keyword}** is already in your trigger list`);
         }
 
         setTimeout(() => {

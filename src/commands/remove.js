@@ -10,7 +10,7 @@ module.exports = {
         const user = msg.author.id;
         const keyword = msg.command.params[0].toLowerCase();
 
-        let result = await cache.delTrigger(guild, user, keyword);
+        let result = await cache.delTrigger(guild, user, keyword, false);
 
         let message;
 

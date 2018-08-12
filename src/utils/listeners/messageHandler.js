@@ -26,34 +26,20 @@ module.exports = async (msg) => {
         const message = info.msg;
         const author = info.msg.author;
         const member = info.member;
-        Logger.log(`Shard[${msg.client.shard.id}]:Notified member: "${guild} | ${author.tag} -> ${member.user.tag} | ${info.word}"`);
+        Logger.log(`Shard[${msg.client.shard.id}]:Notified member: "${guild} | ${author.tag} -> ${member.user.tag} | ${info.keyword}"`);
 
-        let messageContent = `**${author}** mentioned the word **${info.word}** in **${channel}** (${guild.name})`;
+        let messageContent = `**${author}** mentioned the ${info.regex ? "RegExp": "word"} **${info.keyword}** in **${channel}** (${guild.name})`;
         // messageContent += `\n\nWord: ${info.word}\nServer: ${guild.name}\nChannel: ${channel}\nMentioner: ${author}`;
         messageContent += `\n\n\`${info.msg.content}\``;
         messageContent += `\n\n**Go to channel:** ${channel}`;
         messageContent += `\n\n**Jump to message:**\nhttps://discordapp.com/channels/${guild.id}/${channel.id}/${message.id}`;
-        messageContent += `\n\n**React with ❌ to remove:** \`${info.word}\``;
+        messageContent += `\n\n**React with ❌ to remove:** \`${info.keyword}\``;
         const embed = new RichEmbed({
-            title: "A word that you are following was mentioned",
+            title: `A ${info.regex ? "RegExp": "word"} that you are following was mentioned`,
             description: messageContent,
-            // fields: [
-            //     {
-            //         name: "Message:",
-            //         value: `\`${info.msg.content}\``,
-            //     },
-            //     {
-            //         name: "Unfollow",
-            //         value: `React with ❌ to remove: \`${info.word}\``
-            //     },
-            //     {
-            //         name: "Link:",
-            //         value: `https://discordapp.com/channels/${guild.id}/${channel.id}/${message.id}`
-            //     },
-            // ],
             color: parseInt("FF0000", 16),
             footer: {
-                text: `${info.word} ${guild.id}`,
+                text: `${guild.id} ${info.regex} ${info.keyword} `,
             },
             timestamp: info.msg.original.createdAt,
         });
@@ -62,7 +48,7 @@ module.exports = async (msg) => {
             await message.react("❌");
         } catch (e) {
             const triggers = await cache.getTrigger(guild.id, member.id);
-            triggers.forEach(trigger => cache.delTrigger(guild.id, member.id, trigger.keyword));
+            triggers.forEach(trigger => cache.delTrigger(guild.id, member.id, trigger.keyword, trigger.regex));
         }
     });
 

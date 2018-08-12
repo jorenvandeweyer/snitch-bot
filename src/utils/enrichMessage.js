@@ -35,33 +35,39 @@ class RichMessage extends EventEmitter {
 
         const list = Cache.triggers.get(guild_id);
 
-        list && words.forEach((word) => {
-            if (list.has(word) && !hits.includes(word)) {
-                hits.push(word);
+        // console.log(list);
+        list && list.forEach((trigger, keyword) => {
+            const matchWord = this.content.toLowerCase().match(trigger.word);
+            const matchRegex = this.content.toLowerCase().match(trigger.regex);
 
-                const users = list.get(word);
+            if (matchWord) matchWord.users = trigger.users;
+            if (matchRegex) matchRegex.users = trigger.usersR;
 
-                users.forEach(async (user) => {
-                    const guild = this.channel.guild;
-                    let member;
-                    if (guild.members.has(user)) {
-                        member = guild.members.get(user);
-                    } else {
-                        member = await guild.fetchMember(user).catch(() => {
-                            Cache.delTriggersOf(guild_id, user);
-                            return null;
-                        });
-                    }
+            [matchWord, matchRegex].forEach((match, index) => {
+                if (match) {
+                    match.users.forEach(async (user) => {
+                        const guild = this.channel.guild;
+                        let member;
+                        if (guild.members.has(user)) {
+                            member = guild.members.get(user);
+                        } else {
+                            member = await guild.fetchMember(user).catch(() => {
+                                Cache.delTriggersOf(guild_id, user);
+                                return null;
+                            });
+                        }
 
-                    if (member && member.permissionsIn(this.channel).has("VIEW_CHANNEL")) {
-                        this.emit("hit", {
-                            msg: this,
-                            word,
-                            member,
-                        });
-                    }
-                });
-            }
+                        if (member && member.permissionsIn(this.channel).has("VIEW_CHANNEL")) {
+                            this.emit("hit", {
+                                msg: this,
+                                keyword,
+                                regex: index,
+                                member,
+                            });
+                        }
+                    });
+                }
+            });
         });
 
         this.emit("finished");

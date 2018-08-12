@@ -7,11 +7,13 @@ module.exports = async (reaction, user) => {
     if (msg.channel.type !== "dm") return;
     if (!reaction.me) return;
 
-    const keyword = msg.embeds[0].footer.text.split(" ")[0];
+    const data = msg.embeds[0].footer.text.split(" ");
     const user_id = user.id;
-    const guild = msg.embeds[0].footer.text.split(" ")[1];
+    const guild_id = data.shift();
+    const regex = parseInt(data.shift());
+    const keyword = data.join(" ");
 
-    const result = await cache.delTrigger(guild, user_id, keyword);
+    const result = await cache.delTrigger(guild_id, user_id, keyword, regex);
 
     let message_content;
 

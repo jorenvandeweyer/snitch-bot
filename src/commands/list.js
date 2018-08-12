@@ -14,7 +14,7 @@ module.exports = {
         let message;
 
         if (result.length) {
-            message = await msg.member.send(`List of your triggers:\n${result.map(row => row.keyword).join(", ")}`);
+            message = await msg.member.send(`List of your triggers:\n${result.map(row => "`" + row.keyword + "`" + (row.regex ? "  (R)" : "")).join("\n")}`);
         } else {
             message = await msg.member.send(`You don't have any triggers`);
         }

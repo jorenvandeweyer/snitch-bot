@@ -6,15 +6,11 @@ module.exports = {
     usage: "",
     args: 0,
     async execute (msg) {
-        const client = msg.original.client;
+        const shard = msg.original.client.shard;
 
         const result = await db.query("SELECT COUNT(*) AS total FROM triggers");
-        const members_all = await client.broadcast({ request: "members" });
-        const guilds_all = await client.broadcast({ request: "guilds" });
-
-        let members, guilds;
-        if (members_all.success) members = members_all.results.map(result => result.data.members).reduce((total, num) => total + num);
-        if (guilds_all.success) guilds = guilds_all.results.map(result => result.data.guilds).reduce((total, num) => total + num);
+        const members = await shard.broadcastEval("this.guilds.map(guild => guild.memberCount)").then(members => members.filter(arr => arr.length).map(arr => arr.reduce((total, num) => total + num)).reduce((total, num) => total + num));
+        const guilds = await shard.broadcastEval("this.guilds.size").then(guilds => guilds.reduce((total, num) => total + num));
 
         const embed = new RichEmbed({
             title: "💾 Stats 💾",

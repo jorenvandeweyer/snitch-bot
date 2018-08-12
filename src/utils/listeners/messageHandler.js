@@ -14,7 +14,7 @@ module.exports = async (msg) => {
             msg.reply("Please use the commands in a guild.");
         } else if (richMessage.command.args <= richMessage.command.params.length) {
             if (richMessage.command.vote) {
-                const result = await db.query("select * from discordbots.webhook_dbl where user=? AND bot='452042500828299264' limit 1", [msg.author.id]);
+                const result = await db.query("select * from discordbots.webhook_dbl where user=? AND bot='452042500828299264' AND type='upvote' limit 1", [msg.author.id]);
                 if (result.length) {
                     await richMessage.command.execute(richMessage);
                 } else {

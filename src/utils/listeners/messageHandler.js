@@ -11,13 +11,16 @@ module.exports = async (msg) => {
     if (richMessage.isCommand) {
         if (msg.channel.type !== "text" && richMessage.command.guildOnly) {
             msg.reply("Please use the commands in a guild.");
-            return;
         } else if (richMessage.command.args <= richMessage.command.params.length) {
-            await richMessage.command.execute(richMessage);
+            if (!richMessage.command.vote) {
+                await richMessage.command.execute(richMessage);
+            }
         } else {
             await msg.channel.send(`This command requires atleast ${richMessage.command.args} argument${richMessage.command.args === 1 ? "" : "s"}`);
         }
     }
+
+    if (msg.channel.type !== "text") return;
 
     richMessage.on("hit", async (info) => {
         msg.client.metrics.incH();

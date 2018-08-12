@@ -5,6 +5,7 @@ module.exports = {
     guildOnly: true,
     usage: "[word]",
     args: 1,
+    vote: true,
     async execute (msg) {
         const guild = msg.channel.guild.id;
         const user = msg.author.id;

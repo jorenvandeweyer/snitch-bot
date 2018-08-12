@@ -12,17 +12,16 @@ const client = new Discord.Client();
 client.metrics = ShardMetrics();
 
 extendEvents(client);
+discordbots(client);
 
 client.on('ready', () => {
     Cache.build(client.guilds);
     Logger.success(`Shard[${client.shard.id}]:Ready!`)
-    discordbots(client);
     client.user.setActivity("your messages | listen!help", {
         type: "WATCHING"
     });
 });
 
-client.on("guildCreate", () => { discordbots(client); });
 client.on('message', MessageHandler);
 client.on("messageReactionAdd", ReactionHandler);
 client.on("guildMemberRemove", MemberHandler);

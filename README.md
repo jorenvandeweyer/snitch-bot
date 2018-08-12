@@ -5,7 +5,7 @@
 
 ## Description
 
-Word Notifications with emoji support! 🎉.
+Word Notifications with emoji support and **RegExp**! 😱🎉.
 
 Go **directly** to this particular message with **one click**!
 

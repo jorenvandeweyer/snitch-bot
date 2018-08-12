@@ -4,6 +4,7 @@
   "description": "A discord bot that listens for a string in a message a mentions you on a hit",
   "main": "src/index.js",
   "dependencies": {
+    "dblapi.js": "^2.2.0",
     "discord.js": "^11.3.2",
     "influx": "^5.0.7",
     "mysql": "^2.15.0",

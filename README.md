@@ -25,6 +25,10 @@ Every time someone says the word "cookie", the bot will send you a DM with the f
 
 `listen!remove [word]`: Remove a word from your trigger list
 
+`listen!addRegex [regexp]`: Add a regExp to your trigger list
+
+`listen!removeRegex [regexp]`: Remove a regExp from your trigger list
+
 `listen!list`: Show all triggers in your trigger list
 
 `listen!help`: Gives you all available commands

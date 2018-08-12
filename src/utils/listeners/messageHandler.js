@@ -2,6 +2,7 @@ const EnrichMessage = require("../enrichMessage");
 const Logger = require("../logger");
 const { RichEmbed } = require("discord.js");
 const cache = require("../cache");
+const db = require("../database");
 
 module.exports = async (msg) => {
     msg.client.metrics.incM();
@@ -12,7 +13,14 @@ module.exports = async (msg) => {
         if (msg.channel.type !== "text" && richMessage.command.guildOnly) {
             msg.reply("Please use the commands in a guild.");
         } else if (richMessage.command.args <= richMessage.command.params.length) {
-            if (!richMessage.command.vote) {
+            if (richMessage.command.vote) {
+                const result = await db.query("select * from discordbots.webhook_dbl where user=? AND bot='452042500828299264' limit 1", [msg.author.id]);
+                if (result.length) {
+                    await richMessage.command.execute(richMessage);
+                } else {
+                    await msg.channel.send(`To use this command you need to vote at https://discordbots.org/bot/snitch/vote?c \n This takes 15 seconds and will help to improve and add extra features to the bot! Thanks!`);
+                }
+            } else {
                 await richMessage.command.execute(richMessage);
             }
         } else {

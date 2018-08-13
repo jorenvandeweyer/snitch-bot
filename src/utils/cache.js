@@ -146,6 +146,7 @@ async function build(guilds) {
 }
 
 function createWordRegExp(word) {
+    if (!word) return null;
     let prefix = "";
     let suffix = "";
     if (word[0].match(new RegExp("[0-z]"))) {

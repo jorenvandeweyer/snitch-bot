@@ -10,7 +10,8 @@ async function setTrigger(guild, user, keyword, regex=false) {
 
     if (!triggers.get(guild).has(keyword)) {
         triggers.get(guild).set(keyword, {
-            regex: new RegExp(keyword),
+            regex: null,
+            word: null,
             op: "00",
             users: [],
             usersR: []
@@ -21,6 +22,7 @@ async function setTrigger(guild, user, keyword, regex=false) {
 
     if (regex) {
         if (!trigger.usersR.includes(user)) {
+            trigger.regex = new RegExp(keyword);
             trigger.op = "1" + trigger.op[1];
             trigger.usersR.push(user);
             await db.setTrigger(guild, user, keyword, regex);
@@ -28,6 +30,7 @@ async function setTrigger(guild, user, keyword, regex=false) {
         }
     } else {
         if (!trigger.users.includes(user)) {
+            trigger.word = new RegExp(`\\b${keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`);
             trigger.op = trigger.op[0] + "1";
             trigger.users.push(user);
             await db.setTrigger(guild, user, keyword, regex);
@@ -116,8 +119,8 @@ async function build(guilds) {
 
         if (!triggers.get(row.guild).has(row.keyword)) {
             triggers.get(row.guild).set(row.keyword, {
-                regex: new RegExp(row.keyword),
-                word: new RegExp(`\\b${row.keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`),
+                regex: null,
+                word: null,
                 op: "00",
                 users: [],
                 usersR: []
@@ -127,9 +130,15 @@ async function build(guilds) {
         const trigger = triggers.get(row.guild).get(row.keyword);
 
         if (row.regex) {
+            if (!trigger.regex) {
+                trigger.regex = new RegExp(row.keyword);
+            }
             trigger.op = "1" + trigger.op[1];
             trigger.usersR.push(row.user);
         } else {
+            if (!trigger.word) {
+                trigger.word = new RegExp(`\\b${row.keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`);
+            }
             trigger.op = trigger.op[0] + "1";
             trigger.users.push(row.user);
         }

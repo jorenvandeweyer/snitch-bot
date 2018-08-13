@@ -30,7 +30,7 @@ async function setTrigger(guild, user, keyword, regex=false) {
         }
     } else {
         if (!trigger.users.includes(user)) {
-            trigger.word = new RegExp(`\\b${keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`);
+            trigger.word = createWordRegExp(keyword);
             trigger.op = trigger.op[0] + "1";
             trigger.users.push(user);
             await db.setTrigger(guild, user, keyword, regex);
@@ -137,12 +137,25 @@ async function build(guilds) {
             trigger.usersR.push(row.user);
         } else {
             if (!trigger.word) {
-                trigger.word = new RegExp(`\\b${row.keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`);
+                trigger.word = createWordRegExp(row.keyword);
             }
             trigger.op = trigger.op[0] + "1";
             trigger.users.push(row.user);
         }
     }
+}
+
+function createWordRegExp(word) {
+    let prefix = "";
+    let suffix = "";
+    if (word[0].match(new RegExp("[0-z]"))) {
+        prefix = "\\b";
+    }
+    if (word[word.length-1].match(new RegExp("[0-z]"))) {
+        suffix = "\\b";
+    }
+
+    return new RegExp(`${prefix}${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}${suffix}`);
 }
 
 module.exports = {

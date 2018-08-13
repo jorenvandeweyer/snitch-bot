@@ -19,11 +19,11 @@ module.exports = {
             message = await msg.channel.send(`The word **${keyword}** is already in your trigger list`);
         }
 
-        setTimeout(() => {
-            if (msg.original.deletable) {
-                msg.original.delete();
-            }
-            message.delete();
-        }, 3000);
+        // setTimeout(() => {
+        //     if (msg.original.deletable) {
+        //         msg.original.delete();
+        //     }
+        //     message.delete();
+        // }, 3000);
     }
 };

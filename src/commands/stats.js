@@ -35,8 +35,8 @@ module.exports = {
         });
 
         msg.channel.send(embed);
-        if (msg.original.deletable) {
-            msg.original.delete();
-        }
+        // if (msg.original.deletable) {
+        //     msg.original.delete();
+        // }
     }
 };

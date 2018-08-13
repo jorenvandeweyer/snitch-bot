@@ -2,14 +2,19 @@ class Messages{
     constructor() {
         this.messages = 0;
         this.hits = 0;
+        this.hits_regex = 0;
     }
 
     incM() {
         this.messages++;
     }
 
-    incH() {
-        this.hits++;
+    incH(regex) {
+        if (regex) {
+            this.hits_regex++;
+        } else {
+            this.hits++;
+        }
     }
 
     fetchM() {
@@ -22,6 +27,12 @@ class Messages{
         const h = this.hits;
         this.hits = 0;
         return h;
+    }
+
+    fetchHR() {
+        const hr = this.hits_regex;
+        this.hits_regex = 0;
+        return hr;
     }
 }
 
@@ -66,6 +77,7 @@ module.exports.Metrics = (manager) => {
                 fields: {
                     messages: Influx.FieldType.INTEGER,
                     hits: Influx.FieldType.INTEGER,
+                    hits_regex: Influx.FieldType.INTEGER,
                 },
                 tags: [],
             }
@@ -78,6 +90,7 @@ module.exports.Metrics = (manager) => {
         const users = manager.broadcastEval("this.guilds.map(guild => guild.memberCount)").then(members => members.filter(arr => arr.length).map(arr => arr.reduce((total, num) => total + num)).reduce((total, num) => total + num));
         const messages = manager.broadcastEval("this.metrics.fetchM()").then(messages => messages.reduce((total, num) => total + num));
         const hits = manager.broadcastEval("this.metrics.fetchH()").then(hits => hits.reduce((total, num) => total + num));
+        const hits_regex = manager.broadcastEval("this.metrics.fetchHR()").then(hits => hits.reduce((total, num) => total + num));
 
         const result = await query("SELECT (SELECT COUNT(DISTINCT user_id) FROM triggers) as unique_users, (SELECT COUNT(DISTINCT user_id, guild_id) FROM triggers) as users, (SELECT COUNT(*) FROM triggers) as triggers, (SELECT COUNT(DISTINCT keyword_id) FROM triggers) as words").then(result => result[0]);
 
@@ -105,6 +118,7 @@ module.exports.Metrics = (manager) => {
                 fields: {
                     messages: await messages,
                     hits: await hits,
+                    hits_regex: await hits_regex,
                 }
             },
             {

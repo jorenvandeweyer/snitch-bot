@@ -5,8 +5,8 @@ const cache = require("../cache");
 const db = require("../database");
 
 module.exports = async (msg) => {
-    msg.client.metrics.incM();
     if (msg.client.user.id === msg.author.id) return;
+    msg.client.metrics.incM();
     const richMessage = await EnrichMessage(msg);
 
     if (richMessage.isCommand) {
@@ -31,7 +31,7 @@ module.exports = async (msg) => {
     if (msg.channel.type !== "text") return;
 
     richMessage.on("hit", async (info) => {
-        msg.client.metrics.incH();
+        msg.client.metrics.incH(info.regex);
         const guild = info.msg.channel.guild;
         const channel = info.msg.channel;
         const message = info.msg;

@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const MessageHandler = require("./utils/listeners/messageHandler");
 const ReactionHandler = require("./utils/listeners/reactionHandler");
 const MemberHandler = require("./utils/listeners/memberHandler");
-const extendEvents = require("./utils/listeners/events");
+const extend = require("./utils/extend");
 const Logger = require("./utils/logger");
 const discordbots = require("./utils/discordbots");
 const { ShardMetrics } = require("./metrics/index");
@@ -11,7 +11,7 @@ const Cache = require("./utils/cache");
 const client = new Discord.Client();
 client.metrics = ShardMetrics();
 
-extendEvents(client);
+extend(client);
 discordbots(client);
 
 client.on('ready', () => {

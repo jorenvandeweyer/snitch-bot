@@ -6,7 +6,7 @@ module.exports = {
     usage: "",
     args: 0,
     async execute (msg) {
-        const shard = msg.original.client.shard;
+        const shard = msg.client.shard;
 
         const result = await db.query("SELECT COUNT(*) AS total FROM triggers");
         const members = await shard.broadcastEval("this.guilds.map(guild => guild.memberCount)").then(members => members.filter(arr => arr.length).map(arr => arr.reduce((total, num) => total + num)).reduce((total, num) => total + num));
@@ -35,8 +35,8 @@ module.exports = {
         });
 
         msg.channel.send(embed);
-        // if (msg.original.deletable) {
-        //     msg.original.delete();
+        // if (msg.deletable) {
+        //     msg.delete();
         // }
     }
 };

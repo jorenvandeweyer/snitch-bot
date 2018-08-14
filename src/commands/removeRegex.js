@@ -22,8 +22,8 @@ module.exports = {
         }
 
         // setTimeout(() => {
-        //     if (msg.original.deletable) {
-        //         msg.original.delete();
+        //     if (msg.deletable) {
+        //         msg.delete();
         //     }
         //     message.delete();
         // }, 3000);

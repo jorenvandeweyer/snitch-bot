@@ -9,7 +9,8 @@
     "influx": "^5.0.7",
     "mysql": "^2.15.0",
     "nodemon": "^1.17.5",
-    "request": "^2.87.0"
+    "request": "^2.87.0",
+    "safe-regex": "^1.1.0"
   },
   "devDependencies": {},
   "scripts": {

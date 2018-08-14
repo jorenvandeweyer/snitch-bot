@@ -3,7 +3,8 @@ const { RichEmbed } = require("discord.js");
 const commands = require("../commands");
 const Cache = require("../cache");
 const Logger = require("../logger");
-const prefixes = ["listen&", "l&"];
+
+const prefixes = ["listen!", "l!"];
 
 module.exports.isCommand = async function() {
     this.eventEmitter = new EventEmitter();

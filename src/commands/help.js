@@ -8,7 +8,8 @@ module.exports = {
         const embed = new RichEmbed({
             title: "Help",
             color: parseInt("FF0000", 16),
-            description: "**\nlisten!add [word]**\n\n**listen!remove [word]**\n\n**listen!addRegex [regexp]**\n\n**listen!removeRegex [regexp]**\n\n**listen!list**\n\n**listen!invite**\n\n**listen!stats**"
+            description: "**\nlisten!add [word]**\n\n**listen!remove [word]**\n\n**listen!addRegex [regexp]**\n\n**listen!removeRegex [regexp]**\n\n**listen!list**\n\n**listen!invite**\n\n**listen!stats**",
+            url: "https://dupbit.com/snitch"
         });
 
         msg.author.send(embed);

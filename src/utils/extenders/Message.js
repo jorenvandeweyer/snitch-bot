@@ -76,7 +76,7 @@ module.exports.search = function() {
                         Logger.log(`Shard[${this.client.shard.id}]:Notified member: "${guild} | ${this.author.tag} -> ${member.user.tag} | ${keyword}"`);
 
                         let messageContent = `**${this.author.tag}** mentioned the ${test.isRegex ? "RegExp": "word"} **${keyword}** in **${this.channel}** (${guild.name})`;
-                        messageContent += `\n\n\`${this.content}\``;
+                        messageContent += `\n\n\`${this.content.replace(/`/g, "")}\``;
                         messageContent += `\n\n**Go to channel:** ${this.channel}`;
                         messageContent += `\n\n**Jump to message:**\nhttps://discordapp.com/channels/${guild.id}/${this.channel.id}/${this.id}`;
                         messageContent += `\n\n**React with ❌ to remove:** \`${keyword}\``;
@@ -95,7 +95,8 @@ module.exports.search = function() {
                             const message = await member.send(embed);
                             await message.react("❌");
                         } catch (e) {
-                            cache.delTriggersOf(guild.id, member.id);
+                            console.log(e);
+                            Cache.delTriggersOf(guild.id, member.id);
                         }
                     }
                 });

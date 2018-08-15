@@ -10,6 +10,10 @@ module.exports = {
         const user = msg.author.id;
         const keyword = msg.command.params[0].toLowerCase();
 
+        if (keyword.length >= 99) {
+            return msg.channel.send("Your word can't exceed the 99 character limit");
+        }
+
         let result = await cache.setTrigger(guild, user, keyword, false);
 
         let message;

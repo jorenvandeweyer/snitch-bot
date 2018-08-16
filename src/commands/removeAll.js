@@ -1,7 +1,7 @@
 const cache = require("../utils/cache");
 
 module.exports = {
-    name: "remove",
+    name: "removeAll",
     guildOnly: true,
     usage: "[word]",
     args: 1,
@@ -10,8 +10,8 @@ module.exports = {
         const user = msg.author.id;
         const keyword = msg.command.params[0].toLowerCase();
 
-        let result = await cache.delTriggersOf(guild, user);
-        let result = await cache.delIgnoresOf(guild, user);
+        cache.delTriggersOf(guild, user);
+        cache.delIgnoresOf(guild, user);
 
         msg.channel.send(`All your triggers and ignores are reset`);
     }

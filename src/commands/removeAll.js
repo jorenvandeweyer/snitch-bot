@@ -4,7 +4,7 @@ module.exports = {
     name: "removeall",
     guildOnly: true,
     usage: "[word]",
-    args: 1,
+    args: 0,
     async execute (msg) {
         const guild = msg.channel.guild.id;
         const user = msg.author.id;

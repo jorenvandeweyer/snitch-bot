@@ -8,7 +8,6 @@ module.exports = {
     async execute (msg) {
         const guild = msg.channel.guild.id;
         const user = msg.author.id;
-        const keyword = msg.command.params[0].toLowerCase();
 
         cache.delTriggersOf(guild, user);
         cache.delIgnoresOf(guild, user);

@@ -106,7 +106,7 @@ async function getTriggers(guild, user) {
 }
 
 async function delTrigger(guild, user, keyword, regex) {
-    return await query("DELETE triggers FROM triggers INNER JOIN guilds on guilds.guild_id = triggers.guild_id INNER JOIN users ON users.user_id = triggers.user_id INNER JOIN keywords ON keywords.keyword_id = triggers.keyword_id WHERE guilds.guild = ? AND users.user = ? AND keywords.keyword = ?", [guild, user, keyword]);
+    return await query("DELETE triggers FROM triggers INNER JOIN guilds on guilds.guild_id = triggers.guild_id INNER JOIN users ON users.user_id = triggers.user_id INNER JOIN keywords ON keywords.keyword_id = triggers.keyword_id WHERE guilds.guild = ? AND users.user = ? AND keywords.keyword = ? AND keywords.regex=?", [guild, user, keyword, regex]);
 }
 
 async function delTriggersOf(guild, user) {

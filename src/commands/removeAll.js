@@ -1,7 +1,7 @@
 const cache = require("../utils/cache");
 
 module.exports = {
-    name: "removeAll",
+    name: "removeall",
     guildOnly: true,
     usage: "[word]",
     args: 1,

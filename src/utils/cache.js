@@ -90,12 +90,14 @@ async function delTriggersOf(guild, user) {
                 trigger.usersR.splice(trigger.usersR.indexOf(user), 1);
                 if (!trigger.usersR.length) {
                     trigger.op = "0" + trigger.op[1];
+                    trigger.regex = null;
                 }
             }
             if (trigger.users.includes(user)) {
                 trigger.users.splice(trigger.users.indexOf(user), 1);
                 if (!trigger.users.length) {
                     trigger.op = trigger.op[0] + "0";
+                    trigger.word = null;
 
                 }
             }

@@ -80,6 +80,15 @@ module.exports.Metrics = (manager) => {
                     hits_regex: Influx.FieldType.INTEGER,
                 },
                 tags: [],
+            },
+            {
+                measurement: "heartbeat",
+                fields: {
+                    avg: Influx.FieldType.FLOAT,
+                    min: Influx.FieldType.FLOAT,
+                    max: Influx.FieldType.FLOAT,
+                },
+                tags: [],
             }
         ]
     });
@@ -91,10 +100,19 @@ module.exports.Metrics = (manager) => {
         const messages = manager.broadcastEval("this.metrics.fetchM()").then(messages => messages.reduce((total, num) => total + num));
         const hits = manager.broadcastEval("this.metrics.fetchH()").then(hits => hits.reduce((total, num) => total + num));
         const hits_regex = manager.broadcastEval("this.metrics.fetchHR()").then(hits => hits.reduce((total, num) => total + num));
+        const heartbeats = manager.broadcastEval("this.pings[0]");
 
         const result = await query("SELECT (SELECT COUNT(DISTINCT user_id) FROM triggers) as unique_users, (SELECT COUNT(DISTINCT user_id, guild_id) FROM triggers) as users, (SELECT COUNT(*) FROM triggers) as triggers, (SELECT COUNT(DISTINCT keyword_id) FROM triggers) as words").then(result => result[0]);
 
         client.writePoints([
+            {
+                measurement: "heartbeat",
+                fields: {
+                    avg: (await heartbeats).reduce((total, num) => total+num)/(await heartbeats).length,
+                    min: Math.min(...await heartbeats),
+                    max: Math.min(...await heartbeats),
+                }
+            },
             {
                 measurement: "guilds",
                 fields: {

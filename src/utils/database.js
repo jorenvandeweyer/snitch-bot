@@ -55,6 +55,9 @@ async function setup() {
     result = await query("CREATE TABLE IF NOT EXISTS triggers (`trigger_id` INT UNSIGNED AUTO_INCREMENT, `guild_id` INT UNSIGNED, `user_id` INT UNSIGNED, `keyword_id` INT UNSIGNED, FOREIGN KEY (`guild_id`) REFERENCES guilds(`guild_id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`user_id`) REFERENCES users(`user_id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`keyword_id`) REFERENCES keywords(`keyword_id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`trigger_id`), UNIQUE `combined_index` (`guild_id`, `user_id`, `keyword_id`))");
     if (result && !result.warningCount) Logger.info("[db]Created table \"triggers\"");
 
+    result = await query("CREATE TABLE IF NOT EXISTS ignores (`ignore_id` INT UNSIGNED AUTO_INCREMENT, `guild_id` INT UNSIGNED, `user_id` INT UNSIGNED, `ignore` INT UNSIGNED, FOREIGN KEY (`guild_id`) REFERENCES guilds(`guild_id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`user_id`) REFERENCES users (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`ignore`) REFERENCES users (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`ignore_id`), UNIQUE `combined_index` (`guild_id`, `user_id`, `ignore`));");
+    if (result && !result.warningCount) Logger.info("[db]Created table \"ignores\"");
+
 }
 
 async function getUser(user) {
@@ -98,30 +101,44 @@ async function setTrigger(guild, user, keyword, regex) {
     return await query("INSERT INTO triggers (`guild_id`, `user_id`, `keyword_id`) VALUES (?, ?, ?)", [guild_id, user_id, keyword_id]);
 }
 
-async function getTrigger(guild, user) {
-    const guild_id = await getGuild(guild);
-    const user_id = await getUser(user);
-
-    return await query("SELECT keywords.keyword, keywords.regex FROM triggers INNER JOIN keywords ON keywords.keyword_id = triggers.keyword_id WHERE guild_id = ? AND user_id = ?", [guild_id, user_id]);
+async function getTriggers(guild, user) {
+    return await query("SELECT keywords.keyword, keywords.regex FROM triggers INNER JOIN keywords ON keywords.keyword_id = triggers.keyword_id INNER JOIN guilds ON guilds.guild_id = triggers.guild_id INNER JOIN users ON users.user_id = triggers.user_id WHERE guilds.guild=? AND users.user=?", [guild, user]);
 }
 
 async function delTrigger(guild, user, keyword, regex) {
-    const guild_id = await getGuild(guild);
-    const user_id = await getUser(user);
-    const keyword_id = await getKeyword(keyword, regex);
-
-    return await query("DELETE FROM triggers WHERE guild_id = ? AND user_id = ? AND keyword_id = ?", [guild_id, user_id, keyword_id]);
+    return await query("DELETE triggers FROM triggers INNER JOIN guilds on guilds.guild_id = triggers.guild_id INNER JOIN users ON users.user_id = triggers.user_id INNER JOIN keywords ON keywords.keyword_id = triggers.keyword_id WHERE guilds.guild = ? AND users.user = ? AND keywords.keyword = ?", [guild, user, keyword]);
 }
 
 async function delTriggersOf(guild, user) {
-    const guild_id = await getGuild(guild);
-    const user_id = await getUser(user);
-
-    return await query("DELETE FROM triggers WHERE guild_id = ? AND user_id = ?", [guild_id, user_id]);
+    return await query("DELETE triggers FROM triggers INNER JOIN guilds ON guilds.guild_id = triggers.guild_id INNER JOIN users ON users.user_id = triggers.user_id WHERE guilds.guild=? AND users.user=?", [guild, user]);
 }
 
 async function allTriggers() {
     return await query("SELECT keywords.keyword, users.user, guilds.guild, keywords.regex FROM triggers INNER JOIN keywords ON keywords.keyword_id = triggers.keyword_id INNER JOIN users ON users.user_id = triggers.user_id INNER JOIN guilds ON guilds.guild_id = triggers.guild_id");
+}
+
+async function setIgnore(guild, user, ignore) {
+    const guild_id = await getGuild(guild);
+    const user_id = await getUser(user);
+    const ignore_user_id = await getUser(ignore);
+
+    return await query("INSERT INTO ignores (`guild_id`, `user_id`, `ignore`) VALUES (?, ?, ?)", [guild_id, user_id, ignore_user_id]);
+}
+
+async function getIgnores(guild, user) {
+    return await query("SELECT U1.user FROM ignores INNER JOIN users AS U1 ON ignores.ignore=U1.user_id INNER JOIN users AS U2 ON U2.user_id = ignores.user_id INNER JOIN guilds ON guilds.guild_id = ignores.guild_id WHERE guilds.guild=? AND U2.user=?", [guild, user]);
+}
+
+async function delIgnore(guild, user, ignore) {
+    return await query("DELETE ignores FROM ignores INNER JOIN guilds ON guilds.guild_id = ignores.guild_id INNER JOIN users AS U1 ON U1.user_id = ignores.user_id INNER JOIN users AS U2 ON U2.user_id = ignores.ignore WHERE guilds.guild=? AND U1.user=? AND U2.user=?", [guild, user, ignore]);
+}
+
+async function delIgnoresOf(guild, user) {
+    return await query("DELETE ignores FROM ignores INNER JOIN guilds ON guilds.guild_id = ignores.guild_id INNER JOIN users ON users.user_id = ignores.user_id WHERE guilds.guild=? AND users.user=?",[guild, user]);
+}
+
+async function allIgnores() {
+    return await query("SELECT guilds.guild, U1.user, U2.user AS `ignore` FROM ignores INNER JOIN guilds ON guilds.guild_id=ignores.guild_id INNER JOIN users AS U1 ON U1.user_id=ignores.user_id INNER JOIN users AS U2 ON U2.user_id=ignores.ignore");
 }
 
 async function getMagnitudeKeywords() {
@@ -133,8 +150,13 @@ setup();
 module.exports = {
     query,
     setTrigger,
-    getTrigger,
+    getTriggers,
     delTrigger,
     delTriggersOf,
     allTriggers,
+    setIgnore,
+    getIgnores,
+    delIgnore,
+    delIgnoresOf,
+    allIgnores,
 };

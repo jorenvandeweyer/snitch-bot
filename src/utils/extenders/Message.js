@@ -59,6 +59,9 @@ module.exports.search = function() {
 
             if (match) {
                 test.users.forEach(async (user) => {
+                    if (Cache.ignores.has(guild.id) && Cache.ignores.get(guild.id).has(user)) {
+                        if (Cache.ignores.get(guild.id).get(user).includes(this.author.id)) return;
+                    }
 
                     let member;
                     if (guild.members.has(user)) {
@@ -76,7 +79,7 @@ module.exports.search = function() {
                         Logger.log(`Shard[${this.client.shard.id}]:Notified member: "${guild} | ${this.author.tag} -> ${member.user.tag} | ${keyword}"`);
 
                         let messageContent = `**${this.author.tag}** mentioned the ${test.isRegex ? "RegExp": "word"} **${keyword}** in **${this.channel}** (${guild.name})`;
-                        messageContent += `\n\n\`${this.content.replace(/`/g, "")}\``;
+                        messageContent += `\n\n\`${this.content.replace(/`/g, "").slice(0, 1000)}\``;
                         messageContent += `\n\n**Go to channel:** ${this.channel}`;
                         messageContent += `\n\n**Jump to message:**\nhttps://discordapp.com/channels/${guild.id}/${this.channel.id}/${this.id}`;
                         messageContent += `\n\n**React with ❌ to remove:** \`${keyword}\``;

@@ -20,12 +20,5 @@ module.exports = {
         } else {
             message = await msg.channel.send(`The RegExp **${keyword}** is not on your trigger list`);
         }
-
-        // setTimeout(() => {
-        //     if (msg.deletable) {
-        //         msg.delete();
-        //     }
-        //     message.delete();
-        // }, 3000);
     }
 };

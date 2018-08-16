@@ -12,8 +12,5 @@ module.exports = {
         });
 
         msg.author.send(embed);
-        // if (msg.deletable) {
-        //     msg.delete();
-        // }
     }
 };

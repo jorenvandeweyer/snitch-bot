@@ -35,8 +35,5 @@ module.exports = {
         });
 
         msg.channel.send(embed);
-        // if (msg.deletable) {
-        //     msg.delete();
-        // }
     }
 };

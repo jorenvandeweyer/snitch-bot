@@ -1,4 +1,5 @@
 const cache = require("../utils/cache");
+const member = require("../utils/extractors/member");
 
 module.exports = {
     name: "list",
@@ -9,18 +10,23 @@ module.exports = {
         const guild = msg.channel.guild.id;
         const user = msg.author.id;
 
-        let result = await cache.getTrigger(guild, user);
+        let triggers = await cache.getTriggers(guild, user);
+        let ignores = await cache.getIgnores(guild, user);
+
+        if (ignores.length) {
+            ignores = await Promise.all(ignores.map(row => member(msg, row.user)));
+        }
 
         let message;
 
-        if (result.length) {
-            message = await msg.member.send(`List of your triggers:\n${result.map(row => "`" + row.keyword + "`" + (row.regex ? "  (R)" : "")).join("\n")}`);
+        if (triggers.length) {
+            message = await msg.member.send(`**List of your triggers:**\n${
+                triggers.map(row => "`" + row.keyword + "`" + (row.regex ? "  (R)" : "")).join("\n")
+            }${
+                ignores.length ? `\n\n**Ignoring**:\n${ignores.map(member => member.user.tag).join("\n")}` : ""
+            }`);
         } else {
             message = await msg.member.send(`You don't have any triggers`);
         }
-
-        // if (msg.deletable) {
-        //     msg.delete();
-        // }
     }
 };

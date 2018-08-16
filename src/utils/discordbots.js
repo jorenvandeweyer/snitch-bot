@@ -1,6 +1,7 @@
 const Request = require("request");
 const util = require("util");
 const DBL = require("dblapi.js");
+const Logger = require("./logger");
 
 const { discordbotsapi, discordbotsapi2 } = require("../../config.json");
 
@@ -22,6 +23,10 @@ function pw(client) {
             "Authorization" : discordbotsapi
         },
         json: true,
-        body: {"server_count": client.guilds.size}
+        body: {
+            "shard_id": client.shard.id,
+            "shard_count": client.shard.count,
+            "server_count": client.guilds.size
+        }
     }).catch((err) => Logger.error(`Shard[${client.shard.id}]: discordbotapi error?`));
 }

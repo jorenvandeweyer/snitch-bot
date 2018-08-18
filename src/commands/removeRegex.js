@@ -9,7 +9,7 @@ module.exports = {
     async execute (msg) {
         const guild = msg.channel.guild.id;
         const user = msg.author.id;
-        const keyword = msg.command.params[0].toLowerCase();
+        const keyword = msg.command.params.join(" ").toLowerCase();
 
         let result = await cache.delTrigger(guild, user, keyword, true);
 

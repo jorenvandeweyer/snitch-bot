@@ -16,11 +16,10 @@ module.exports = {
 
         let result = await cache.setTrigger(guild, user, keyword, false);
 
-        let message;
         if (result.added) {
-            message = await msg.channel.send(`Added the word **${keyword}** succesfully`);
+            await msg.channel.send(`Added the word **${keyword}** succesfully`);
         } else if (result.exists) {
-            message = await msg.channel.send(`The word **${keyword}** is already in your trigger list`);
+            await msg.channel.send(`The word **${keyword}** is already in your trigger list`);
         }
     }
 };

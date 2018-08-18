@@ -12,6 +12,6 @@ module.exports = {
         cache.delTriggersOf(guild, user);
         cache.delIgnoresOf(guild, user);
 
-        msg.channel.send(`All your triggers and ignores are reset`);
+        msg.channel.send("All your triggers and ignores are reset");
     }
 };

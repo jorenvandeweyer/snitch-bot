@@ -83,9 +83,9 @@ async function delTrigger(guild, user, keyword, regex) {
 }
 
 async function delTriggersOf(guild, user) {
-    db.delTriggersOf(guild, user)
+    db.delTriggersOf(guild, user);
     if (triggers.has(guild)) {
-        triggers.get(guild).forEach((trigger, keyword) => {
+        triggers.get(guild).forEach((trigger) => {
             if (trigger.usersR.includes(user)) {
                 trigger.usersR.splice(trigger.usersR.indexOf(user), 1);
                 if (!trigger.usersR.length) {
@@ -220,7 +220,7 @@ function createWordRegExp(word) {
         suffix = "\\b";
     }
 
-    return new RegExp(`${prefix}${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}${suffix}`);
+    return new RegExp(`${prefix}${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}${suffix}`);
 }
 
 module.exports = {

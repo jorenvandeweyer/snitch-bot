@@ -13,16 +13,15 @@ module.exports = {
         const ignore_member = await member(msg);
 
         if (!ignore_member) {
-            return await msg.channel.send(`This is not a valid member`);
+            return await msg.channel.send("This is not a valid member");
         }
 
         let result = await cache.delIgnore(guild, user, ignore_member.user.id);
 
-        let message;
         if (result.deleted) {
-            message = await msg.channel.send(`You unignored **${ignore_member.user.tag}**`);
+            await msg.channel.send(`You unignored **${ignore_member.user.tag}**`);
         } else {
-            message = await msg.channel.send(`You are not ignoring **${ignore_member.user.tag}**`);
+            await msg.channel.send(`You are not ignoring **${ignore_member.user.tag}**`);
         }
     }
 };

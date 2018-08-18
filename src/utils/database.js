@@ -8,7 +8,7 @@ const pool = mysql.createPool({
     user: mysql_user,
     password: mysql_pswd,
     database: mysql_db,
-    charset : 'utf8mb4'
+    charset : "utf8mb4"
 });
 
 function getConnection() {
@@ -141,9 +141,9 @@ async function allIgnores() {
     return await query("SELECT guilds.guild, U1.user, U2.user AS `ignore` FROM ignores INNER JOIN guilds ON guilds.guild_id=ignores.guild_id INNER JOIN users AS U1 ON U1.user_id=ignores.user_id INNER JOIN users AS U2 ON U2.user_id=ignores.ignore");
 }
 
-async function getMagnitudeKeywords() {
-    return await query("SELECT keyword, COUNT(*) AS magnitude FROM triggers INNER JOIN keywords ON triggers.keyword_id = keywords.keyword_id GROUP BY triggers.keyword_id ORDER BY magnitude DESC");
-}
+// async function getMagnitudeKeywords() {
+//     return await query("SELECT keyword, COUNT(*) AS magnitude FROM triggers INNER JOIN keywords ON triggers.keyword_id = keywords.keyword_id GROUP BY triggers.keyword_id ORDER BY magnitude DESC");
+// }
 
 setup();
 

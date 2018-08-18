@@ -13,7 +13,7 @@ module.exports.isValid = (regexp) => {
     } catch (e) {
         return false;
     }
-}
+};
 
 module.exports.isSafe = (regexp) => {
     return safe(regexp);
@@ -30,4 +30,4 @@ module.exports.matchesEverything = (regexp) => {
     } catch (e) {
         return true;
     }
-}
+};

@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const Discord = require("discord.js");
 const MessageHandler = require("./utils/listeners/messageHandler");
 const ReactionHandler = require("./utils/listeners/reactionHandler");
 const MemberHandler = require("./utils/listeners/memberHandler");
@@ -14,15 +14,15 @@ client.metrics = ShardMetrics();
 extend(client);
 discordbots(client);
 
-client.on('ready', () => {
+client.on("ready", () => {
     Cache.build(client.guilds);
-    Logger.success(`Shard[${client.shard.id}]:Ready!`)
+    Logger.success(`Shard[${client.shard.id}]:Ready!`);
     client.user.setActivity("your messages | listen!help", {
         type: "WATCHING"
     });
 });
 
-client.on('message', MessageHandler);
+client.on("message", MessageHandler);
 client.on("messageReactionAdd", ReactionHandler);
 client.on("guildMemberRemove", MemberHandler);
 

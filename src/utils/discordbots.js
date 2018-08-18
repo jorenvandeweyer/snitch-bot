@@ -9,11 +9,11 @@ const post = util.promisify(Request.post);
 
 module.exports = (client) => {
     if (discordbotsapi2) {
-        const dbl = new DBL(discordbotsapi2, client);
+        new DBL(discordbotsapi2, client);
     }
     if (discordbotsapi) {
-        client.on("ready", () => { pw(client) });
-        client.on("guildCreate", () => { pw(client) });
+        client.on("ready", () => { pw(client); });
+        client.on("guildCreate", () => { pw(client); });
     }
 };
 
@@ -28,5 +28,5 @@ function pw(client) {
             "shard_count": client.shard.count,
             "server_count": client.guilds.size
         }
-    }).catch((err) => Logger.error(`Shard[${client.shard.id}]: discordbotapi error?`));
+    }).catch(() => Logger.error(`Shard[${client.shard.id}]: discordbotapi error?`));
 }

@@ -12,12 +12,10 @@ module.exports = {
 
         let result = await cache.delTrigger(guild, user, keyword, false);
 
-        let message;
-
         if (result.deleted) {
-            message = await msg.channel.send(`Removed the word **${keyword}** succesfully`);
+            await msg.channel.send(`Removed the word **${keyword}** succesfully`);
         } else {
-            message = await msg.channel.send(`The word **${keyword}** is not on your trigger list`);
+            await msg.channel.send(`The word **${keyword}** is not on your trigger list`);
         }
     }
 };

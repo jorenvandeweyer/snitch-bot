@@ -13,12 +13,10 @@ module.exports = {
 
         let result = await cache.delTrigger(guild, user, keyword, true);
 
-        let message;
-
         if (result.deleted) {
-            message = await msg.channel.send(`Removed the RegExp **${keyword}** succesfully`);
+            await msg.channel.send(`Removed the RegExp **${keyword}** succesfully`);
         } else {
-            message = await msg.channel.send(`The RegExp **${keyword}** is not on your trigger list`);
+            await msg.channel.send(`The RegExp **${keyword}** is not on your trigger list`);
         }
     }
 };

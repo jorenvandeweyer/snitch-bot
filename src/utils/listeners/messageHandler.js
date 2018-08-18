@@ -1,5 +1,3 @@
-const Logger = require("../logger");
-const cache = require("../cache");
 const db = require("../database");
 
 module.exports = async (msg) => {
@@ -17,7 +15,7 @@ module.exports = async (msg) => {
                 if (votes.length) {
                     msg.command.execute(msg);
                 } else {
-                    msg.channel.send(`To use this command you need to vote at https://discordbots.org/bot/snitch/vote?c \n This takes 15 seconds and will help to improve and add extra features to the bot! Thanks!`);
+                    msg.channel.send("To use this command you need to vote at https://discordbots.org/bot/snitch/vote?c \n This takes 15 seconds and will help to improve and add extra features to the bot! Thanks!");
                 }
             } else {
                 msg.command.execute(msg);

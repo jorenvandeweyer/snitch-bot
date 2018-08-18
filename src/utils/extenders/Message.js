@@ -1,4 +1,4 @@
-const EventEmitter = require('events');
+const EventEmitter = require("events");
 const { RichEmbed } = require("discord.js");
 const commands = require("../commands");
 const Cache = require("../cache");
@@ -30,7 +30,6 @@ module.exports.isCommand = async function() {
 };
 
 module.exports.search = function() {
-    const hits = [];
     const guild = this.channel.guild;
 
     if (this.channel.type !== "text") return;
@@ -69,7 +68,7 @@ module.exports.search = function() {
                     } else {
                         member = await guild.fetchMember(user).catch(() => {
                             Cache.delTriggersOf(guild.id, user);
-                            return null
+                            return null;
                         });
                     }
 
@@ -108,7 +107,7 @@ module.exports.search = function() {
 
         this.eventEmitter.emit("finished");
     });
-}
+};
 
 function startsWithPrefix(content) {
     for (let prefix of prefixes) {

@@ -30,11 +30,10 @@ module.exports = {
 
         let result = await cache.setTrigger(guild, user, keyword, true);
 
-        let message;
         if (result.added) {
-            message = await msg.channel.send(`Added the RegExp \`${keyword}\` succesfully`);
+            await msg.channel.send(`Added the RegExp \`${keyword}\` succesfully`);
         } else if (result.exists) {
-            message = await msg.channel.send(`The RegExp \`${keyword}\` is already in your trigger list`);
+            await msg.channel.send(`The RegExp \`${keyword}\` is already in your trigger list`);
         }
     }
 };

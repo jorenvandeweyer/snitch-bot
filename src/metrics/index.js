@@ -38,7 +38,7 @@ class Messages{
 
 module.exports.ShardMetrics = () => {
     return new Messages();
-}
+};
 
 module.exports.Metrics = (manager) => {
     const Influx = require("influx");
@@ -151,4 +151,4 @@ module.exports.Metrics = (manager) => {
         ]).catch(() => null);
     }, 15000);
 
-}
+};

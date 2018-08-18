@@ -17,16 +17,14 @@ module.exports = {
             ignores = await Promise.all(ignores.map(row => member(msg, row.user)));
         }
 
-        let message;
-
         if (triggers.length) {
-            message = await msg.member.send(`**List of your triggers:**\n${
+            await msg.member.send(`**List of your triggers:**\n${
                 triggers.map(row => "`" + row.keyword + "`" + (row.regex ? "  (R)" : "")).join("\n")
             }${
                 ignores.length ? `\n\n**Ignoring**:\n${ignores.map(member => member.user.tag).join("\n")}` : ""
             }`);
         } else {
-            message = await msg.member.send(`You don't have any triggers`);
+            await msg.member.send("You don't have any triggers");
         }
     }
 };

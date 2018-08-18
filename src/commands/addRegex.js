@@ -10,7 +10,7 @@ module.exports = {
     async execute (msg) {
         const guild = msg.channel.guild.id;
         const user = msg.author.id;
-        const keyword = msg.command.params[0].toLowerCase();
+        const keyword = msg.command.params.join(" ").toLowerCase();
 
         if (keyword.length >= 99) {
             return msg.channel.send("Your regex can't exceed the 99 character limit");

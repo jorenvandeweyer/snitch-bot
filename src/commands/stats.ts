@@ -1,3 +1,5 @@
+import { Message } from "discord.js";
+
 const db = require("../utils/database");
 const { RichEmbed } = require("discord.js");
 
@@ -5,12 +7,12 @@ module.exports = {
     name: "stats",
     usage: "",
     args: 0,
-    async execute (msg) {
+    async execute (msg: Message) {
         const shard = msg.client.shard;
 
         const result = await db.query("SELECT COUNT(*) AS total FROM triggers");
-        const members = await shard.broadcastEval("this.guilds.map(guild => guild.memberCount)").then(members => members.filter(arr => arr.length).map(arr => arr.reduce((total, num) => total + num)).reduce((total, num) => total + num));
-        const guilds = await shard.broadcastEval("this.guilds.size").then(guilds => guilds.reduce((total, num) => total + num));
+        const members = await shard.broadcastEval("this.guilds.map(guild => guild.memberCount)").then(members => members.filter(arr => arr.length).map(arr => arr.reduce((total:number, num:number) => total + num)).reduce((total, num) => total + num));
+        const guilds = await shard.broadcastEval("this.guilds.size").then(guilds => guilds.reduce((total:number, num:number) => total + num));
 
         const embed = new RichEmbed({
             title: "💾 Stats 💾",

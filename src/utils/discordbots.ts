@@ -1,3 +1,5 @@
+import { Client } from "discord.js";
+
 const Request = require("request");
 const util = require("util");
 const DBL = require("dblapi.js");
@@ -7,7 +9,7 @@ const { discordbotsapi, discordbotsapi2 } = require("../../config.json");
 
 const post = util.promisify(Request.post);
 
-module.exports = (client) => {
+module.exports = (client:Client) => {
     if (discordbotsapi2) {
         new DBL(discordbotsapi2, client);
     }
@@ -17,7 +19,7 @@ module.exports = (client) => {
     }
 };
 
-function pw(client) {
+function pw(client:Client) {
     post(`https://bots.discord.pw/api/bots/${client.user.id}/stats`, {
         headers : {
             "Authorization" : discordbotsapi

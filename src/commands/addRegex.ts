@@ -1,3 +1,5 @@
+import { Message } from "discord.js";
+
 const cache = require("../utils/cache");
 const regex = require("../utils/regex");
 
@@ -7,8 +9,8 @@ module.exports = {
     usage: "[word]",
     args: 1,
     vote: true,
-    async execute (msg) {
-        const guild = msg.channel.guild.id;
+    async execute (msg: Message) {
+        const guild = msg.guild.id;
         const user = msg.author.id;
         const keyword = msg.command.params.join(" ").toLowerCase();
 

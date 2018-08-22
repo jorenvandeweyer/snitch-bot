@@ -15,23 +15,23 @@ const Colors = {
     WHITE: "\x1b[37m",
 };
 
-function error (err) {
+function error (err: string) {
     output(Colors.RED, err);
 }
 
-function info (inf) {
+function info (inf: string) {
     output(Colors.BLUE, inf);
 }
 
-function log (stream) {
+function log (stream: string) {
     output(Colors.WHITE, stream);
 }
 
-function success (stream) {
+function success (stream: string) {
     output(Colors.GREEN, stream);
 }
 
-function output(color, text) {
+function output(color: string, text: string) {
     Console.log(`${color}${date} | ${text}\x1b[0m`);
 }
 

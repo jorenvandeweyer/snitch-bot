@@ -1,6 +1,8 @@
+import { Message } from "discord.js";
+
 const db = require("../database");
 
-module.exports = async (msg) => {
+module.exports = async (msg: Message) => {
     if (msg.client.user.id === msg.author.id) return;
     msg.client.metrics.incM();
 

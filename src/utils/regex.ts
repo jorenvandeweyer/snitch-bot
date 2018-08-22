@@ -6,7 +6,7 @@ const strings = [
     "AAAAAAAAAAAAAAAAA"
 ];
 
-module.exports.isValid = (regexp) => {
+module.exports.isValid = (regexp: string) => {
     try {
         new RegExp(regexp);
         return true;
@@ -15,11 +15,11 @@ module.exports.isValid = (regexp) => {
     }
 };
 
-module.exports.isSafe = (regexp) => {
+module.exports.isSafe = (regexp: string) => {
     return safe(regexp);
 };
 
-module.exports.matchesEverything = (regexp) => {
+module.exports.matchesEverything = (regexp: string) => {
     try {
         const r = new RegExp(regexp);
         for (let string of strings) {

@@ -1,3 +1,5 @@
+import { Trigger } from "typings";
+
 const EventEmitter = require("events");
 const { RichEmbed } = require("discord.js");
 const commands = require("../commands");
@@ -36,7 +38,7 @@ module.exports.search = function() {
 
     const list = Cache.triggers.get(guild.id);
 
-    list && list.forEach((trigger, keyword) => {
+    list && list.forEach((trigger: Trigger, keyword: string) => {
         const arr = [];
         if (trigger.word) {
             arr.push({
@@ -109,7 +111,7 @@ module.exports.search = function() {
     });
 };
 
-function startsWithPrefix(content) {
+function startsWithPrefix(content: string) {
     for (let prefix of prefixes) {
         if (content.substring(0, prefix.length) === prefix) {
             return prefix;

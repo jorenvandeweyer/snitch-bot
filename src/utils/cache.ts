@@ -1,10 +1,13 @@
+import { Trigger } from "typings";
+import * as Discord from "discord.js";
+
 const db = require("./database");
 const { Collection } = require("discord.js");
 
 const triggers = new Collection();
 const ignores = new Collection();
 
-async function setTrigger(guild, user, keyword, regex=false) {
+async function setTrigger(guild:string, user:string, keyword:string, regex:boolean=false) {
     if (!triggers.has(guild)) {
         triggers.set(guild, new Collection());
     }
@@ -41,11 +44,11 @@ async function setTrigger(guild, user, keyword, regex=false) {
     return { exists: true };
 }
 
-async function getTriggers(guild, user) {
+async function getTriggers(guild:string, user:string) {
     return await db.getTriggers(guild, user);
 }
 
-async function delTrigger(guild, user, keyword, regex) {
+async function delTrigger(guild:string, user:string, keyword:string, regex:boolean) {
     if (triggers.has(guild)) {
         if (triggers.get(guild).has(keyword)) {
             const trigger = triggers.get(guild).get(keyword);
@@ -82,10 +85,10 @@ async function delTrigger(guild, user, keyword, regex) {
     return { deleted: false };
 }
 
-async function delTriggersOf(guild, user) {
+async function delTriggersOf(guild:string, user:string) {
     db.delTriggersOf(guild, user);
     if (triggers.has(guild)) {
-        triggers.get(guild).forEach((trigger) => {
+        triggers.get(guild).forEach((trigger:Trigger) => {
             if (trigger.usersR.includes(user)) {
                 trigger.usersR.splice(trigger.usersR.indexOf(user), 1);
                 if (!trigger.usersR.length) {
@@ -109,7 +112,7 @@ async function delTriggersOf(guild, user) {
     }
 }
 
-async function setIgnore(guild, user, ignore) {
+async function setIgnore(guild:string, user:string, ignore:string) {
     if (!ignores.has(guild)) {
         ignores.set(guild, new Collection());
     }
@@ -128,11 +131,11 @@ async function setIgnore(guild, user, ignore) {
 
 }
 
-async function getIgnores(guild, user) {
+async function getIgnores(guild:string, user:string) {
     return await db.getIgnores(guild, user);
 }
 
-async function delIgnore(guild, user, ignore) {
+async function delIgnore(guild:string, user:string, ignore:string) {
     if (ignores.has(guild) && ignores.get(guild).has(user)) {
         const ignores_user = ignores.get(guild).get(user);
         if (ignores_user.includes(ignore)) {
@@ -148,14 +151,14 @@ async function delIgnore(guild, user, ignore) {
     return { deleted: false };
 }
 
-async function delIgnoresOf(guild, user) {
+async function delIgnoresOf(guild:string, user:string) {
     db.delIgnoresOf(guild, user);
     if (ignores.has(guild) && ignores.get(guild).has(user)) {
         ignores.get(guild).delete(user);
     }
 }
 
-async function build(guilds) {
+async function build(guilds:Discord.Collection<string, Discord.Guild>) {
     const table = await db.allTriggers();
     for (let i = 0; i < table.length; i++) {
         const row = table[i];
@@ -209,7 +212,7 @@ async function build(guilds) {
     }
 }
 
-function createWordRegExp(word) {
+function createWordRegExp(word:string) {
     if (!word) return null;
     let prefix = "";
     let suffix = "";

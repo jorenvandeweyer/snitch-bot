@@ -1,3 +1,5 @@
+import { Message } from "discord.js";
+
 const cache = require("../utils/cache");
 const member = require("../utils/extractors/member");
 
@@ -6,8 +8,8 @@ module.exports = {
     guildOnly: true,
     usage: "[user_id or username]",
     args: 1,
-    async execute (msg) {
-        const guild = msg.channel.guild.id;
+    async execute (msg: Message) {
+        const guild = msg.guild.id;
         const user = msg.author.id;
 
         const ignore_member = await member(msg);

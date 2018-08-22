@@ -1,3 +1,5 @@
+import { Message } from "discord.js";
+
 const cache = require("../utils/cache");
 
 module.exports = {
@@ -5,8 +7,8 @@ module.exports = {
     guildOnly: true,
     usage: "[word]",
     args: 0,
-    async execute (msg) {
-        const guild = msg.channel.guild.id;
+    async execute (msg: Message) {
+        const guild = msg.guild.id;
         const user = msg.author.id;
 
         cache.delTriggersOf(guild, user);

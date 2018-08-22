@@ -2,7 +2,7 @@ const fs = require("fs");
 const { Collection } = require("discord.js");
 const commands = new Collection();
 
-function addDirToCommands(path) {
+function addDirToCommands(path: string) {
     let files = fs.readdirSync(path);
     for (let file of files) {
         if (fs.lstatSync(`${path}/${file}`).isDirectory()) {
@@ -17,3 +17,5 @@ function addDirToCommands(path) {
 addDirToCommands(`${__dirname}/../commands`);
 
 module.exports = commands;
+
+export {};

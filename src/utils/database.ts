@@ -1,3 +1,5 @@
+import { DBConnection, DBResult } from "typings";
+
 const mysql = require("mysql");
 const Logger = require("./logger");
 
@@ -11,24 +13,25 @@ const pool = mysql.createPool({
     charset : "utf8mb4"
 });
 
-function getConnection() {
-    return new Promise((resolve, reject) => {
-        pool.getConnection((err, connection) => {
+function getConnection(): Promise<DBConnection> {
+    return <Promise<DBConnection>> new Promise((resolve, reject) => {
+        pool.getConnection((err:Error, connection:DBConnection) => {
             if (err) return reject(err);
             resolve(connection);
         });
-    }).catch((err) => {
+    }).catch((err: Error) => {
         Logger.error(err);
+        return
     });
 }
 
-function query(query, options) {
-    return new Promise(async (resolve, reject) => {
+function query(query:string, options:Array<string|boolean>=[]): Promise<DBResult> {
+    return <Promise<DBResult>> new Promise(async (resolve, reject) => {
         let connection = await getConnection();
 
         if (!connection) return reject("[-]Couldn't create database connection.");
 
-        connection.query(query, options, (err, result) => {
+        connection.query(query, options, (err:Error, result:DBResult) => {
             if (err) return reject(err);
             resolve(result);
 
@@ -60,7 +63,7 @@ async function setup() {
 
 }
 
-async function getUser(user) {
+async function getUser(user: string): Promise<string> {
     let result = await query("SELECT * FROM users WHERE user = ?", [user]);
 
     if (result && result.length) {
@@ -71,7 +74,7 @@ async function getUser(user) {
     }
 }
 
-async function getGuild(guild) {
+async function getGuild(guild: string): Promise<string> {
     let result = await query("SELECT * FROM guilds WHERE guild = ?", [guild]);
 
     if (result && result.length) {
@@ -82,7 +85,7 @@ async function getGuild(guild) {
     }
 }
 
-async function getKeyword(keyword, regex=false) {
+async function getKeyword(keyword:string, regex:boolean=false): Promise<string> {
     let result = await query("SELECT * FROM keywords WHERE keyword = ? AND regex = ?", [keyword, regex]);
 
     if (result && result.length) {
@@ -93,7 +96,7 @@ async function getKeyword(keyword, regex=false) {
     }
 }
 
-async function setTrigger(guild, user, keyword, regex) {
+async function setTrigger(guild:string, user:string, keyword:string, regex:boolean): Promise<DBResult> {
     const guild_id = await getGuild(guild);
     const user_id = await getUser(user);
     const keyword_id = await getKeyword(keyword, regex);
@@ -101,15 +104,15 @@ async function setTrigger(guild, user, keyword, regex) {
     return await query("INSERT INTO triggers (`guild_id`, `user_id`, `keyword_id`) VALUES (?, ?, ?)", [guild_id, user_id, keyword_id]);
 }
 
-async function getTriggers(guild, user) {
+async function getTriggers(guild:string, user:string) {
     return await query("SELECT keywords.keyword, keywords.regex FROM triggers INNER JOIN keywords ON keywords.keyword_id = triggers.keyword_id INNER JOIN guilds ON guilds.guild_id = triggers.guild_id INNER JOIN users ON users.user_id = triggers.user_id WHERE guilds.guild=? AND users.user=?", [guild, user]);
 }
 
-async function delTrigger(guild, user, keyword, regex) {
+async function delTrigger(guild:string, user:string, keyword:string, regex:boolean) {
     return await query("DELETE triggers FROM triggers INNER JOIN guilds on guilds.guild_id = triggers.guild_id INNER JOIN users ON users.user_id = triggers.user_id INNER JOIN keywords ON keywords.keyword_id = triggers.keyword_id WHERE guilds.guild = ? AND users.user = ? AND keywords.keyword = ? AND keywords.regex=?", [guild, user, keyword, regex]);
 }
 
-async function delTriggersOf(guild, user) {
+async function delTriggersOf(guild:string, user:string) {
     return await query("DELETE triggers FROM triggers INNER JOIN guilds ON guilds.guild_id = triggers.guild_id INNER JOIN users ON users.user_id = triggers.user_id WHERE guilds.guild=? AND users.user=?", [guild, user]);
 }
 
@@ -117,7 +120,7 @@ async function allTriggers() {
     return await query("SELECT keywords.keyword, users.user, guilds.guild, keywords.regex FROM triggers INNER JOIN keywords ON keywords.keyword_id = triggers.keyword_id INNER JOIN users ON users.user_id = triggers.user_id INNER JOIN guilds ON guilds.guild_id = triggers.guild_id");
 }
 
-async function setIgnore(guild, user, ignore) {
+async function setIgnore(guild:string, user:string, ignore:string) {
     const guild_id = await getGuild(guild);
     const user_id = await getUser(user);
     const ignore_user_id = await getUser(ignore);
@@ -125,15 +128,15 @@ async function setIgnore(guild, user, ignore) {
     return await query("INSERT INTO ignores (`guild_id`, `user_id`, `ignore`) VALUES (?, ?, ?)", [guild_id, user_id, ignore_user_id]);
 }
 
-async function getIgnores(guild, user) {
+async function getIgnores(guild:string, user:string) {
     return await query("SELECT U1.user FROM ignores INNER JOIN users AS U1 ON ignores.ignore=U1.user_id INNER JOIN users AS U2 ON U2.user_id = ignores.user_id INNER JOIN guilds ON guilds.guild_id = ignores.guild_id WHERE guilds.guild=? AND U2.user=?", [guild, user]);
 }
 
-async function delIgnore(guild, user, ignore) {
+async function delIgnore(guild:string, user:string, ignore:string) {
     return await query("DELETE ignores FROM ignores INNER JOIN guilds ON guilds.guild_id = ignores.guild_id INNER JOIN users AS U1 ON U1.user_id = ignores.user_id INNER JOIN users AS U2 ON U2.user_id = ignores.ignore WHERE guilds.guild=? AND U1.user=? AND U2.user=?", [guild, user, ignore]);
 }
 
-async function delIgnoresOf(guild, user) {
+async function delIgnoresOf(guild:string, user:string) {
     return await query("DELETE ignores FROM ignores INNER JOIN guilds ON guilds.guild_id = ignores.guild_id INNER JOIN users ON users.user_id = ignores.user_id WHERE guilds.guild=? AND users.user=?",[guild, user]);
 }
 

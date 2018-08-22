@@ -1,3 +1,5 @@
+import { Message } from "discord.js";
+
 const { RichEmbed } = require("discord.js");
 const commands = [
     "**listen!add [word]**",
@@ -24,7 +26,7 @@ module.exports = {
     name: "help",
     usage: "",
     args: 0,
-    async execute (msg) {
+    async execute (msg: Message) {
         const embed = new RichEmbed({
             title: "Help",
             color: parseInt("FF0000", 16),

@@ -2,6 +2,7 @@ import { Message } from "discord.js";
 
 const cache = require("../utils/cache");
 const member = require("../utils/extractors/member");
+const STRINGS = require("../strings/index");
 
 module.exports = {
     name: "unignore",
@@ -15,15 +16,15 @@ module.exports = {
         const ignore_member = await member(msg);
 
         if (!ignore_member) {
-            return await msg.channel.send("This is not a valid member");
+            return await msg.channel.send(STRINGS.INVALID_MEMBER);
         }
 
         let result = await cache.delIgnore(guild, user, ignore_member.user.id);
 
         if (result.deleted) {
-            await msg.channel.send(`You unignored **${ignore_member.user.tag}**`);
+            await msg.channel.send(STRINGS.C_UNIGNORE_SUCCESS.complete(ignore_member.user.tag));
         } else {
-            await msg.channel.send(`You are not ignoring **${ignore_member.user.tag}**`);
+            await msg.channel.send(STRINGS.C_UNIGNORE_E_NOT_LISTED.complete(ignore_member.user.tag));
         }
     }
 };

@@ -14,15 +14,15 @@ module.exports = {
         const keyword = msg.command.params[0].toLowerCase();
 
         if (keyword.length >= 99) {
-            return msg.channel.send(STRINGS.COMMAND_ADD_ERROR_MAX_LENGTH);
+            return msg.channel.send(STRINGS.C_ADD_E_LENGTH);
         }
 
         let result = await cache.setTrigger(guild, user, keyword, false);
 
         if (result.added) {
-            await msg.channel.send(STRINGS.COMMAND_ADD_SUCCESS.complete(keyword));
+            return await msg.channel.send(STRINGS.C_ADD_SUCCESS.complete(keyword));
         } else if (result.exists) {
-            await msg.channel.send(STRINGS.COMMAND_ADD_ERROR_EXISTS.complete(keyword));
+            return await msg.channel.send(STRINGS.C_ADD_E_DUPLICATE.complete(keyword));
         }
     }
 };

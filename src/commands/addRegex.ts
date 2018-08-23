@@ -2,6 +2,7 @@ import { Message } from "discord.js";
 
 const cache = require("../utils/cache");
 const regex = require("../utils/regex");
+const STRINGS = require("../strings/index");
 
 module.exports = {
     name: "addregex",
@@ -15,27 +16,27 @@ module.exports = {
         const keyword = msg.command.params.join(" ").toLowerCase();
 
         if (keyword.length >= 99) {
-            return msg.channel.send("Your regex can't exceed the 99 character limit");
+            return msg.channel.send(STRINGS.C_ADDREGEX_E_LENGTH);
         }
 
         if (!regex.isValid(keyword)) {
-            return msg.channel.send(`\`${keyword}\` is not a valid RegExp.`);
+            return msg.channel.send(STRINGS.C_ADDREGEX_E_INVALID.complete(keyword));
         }
 
         if (!regex.isSafe(keyword)) {
-            return msg.channel.send(`The RegExp \`${keyword}\` is not supported by Snitch. It got flagged as a malicious RegExp, if you think this is a false positive, please report this to Ecstabis#0001 so it can be whitelisted.`);
+            return msg.channel.send(STRINGS.C_ADDREGEX_E_UNSAFE.complete(keyword));
         }
 
         if (regex.matchesEverything(keyword)) {
-            return msg.channel.send(`The RegExp \`${keyword}\` matches to much cases and got flagged as malicious,  if you think this is a false positive, please report this to Ecstabis#0001 so it can be whitelisted.`);
+            return msg.channel.send(STRINGS.C_ADDREGEX_E_MATCHES.complete(keyword));
         }
 
         let result = await cache.setTrigger(guild, user, keyword, true);
 
         if (result.added) {
-            await msg.channel.send(`Added the RegExp \`${keyword}\` succesfully`);
+            await msg.channel.send(STRINGS.C_ADDREGEX_SUCCESS.complete(keyword));
         } else if (result.exists) {
-            await msg.channel.send(`The RegExp \`${keyword}\` is already in your trigger list`);
+            await msg.channel.send(STRINGS.C_ADDREGEX_E_DUPLICATE.complete(keyword));
         }
     }
 };

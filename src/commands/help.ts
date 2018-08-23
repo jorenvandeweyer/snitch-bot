@@ -1,26 +1,7 @@
 import { Message } from "discord.js";
 
 const { RichEmbed } = require("discord.js");
-const commands = [
-    "**listen!add [word]**",
-    "**listen!remove [word]**",
-    "",
-    "**listen!addRegex [regexp]**",
-    "**listen!removeRegex [regexp]**",
-    "",
-    "**listen!removeAll**",
-    "",
-    "**listen!ignore [userid]**",
-    "**listen!unignore [userid]**",
-    "",
-    "**listen!list**",
-    "",
-    "**listen!invite**",
-    "**listen!stats**",
-    "",
-    "Alternative prefixes",
-    "`l!`, `listen!`"
-];
+const STRINGS = require("../strings/index");
 
 module.exports = {
     name: "help",
@@ -30,7 +11,7 @@ module.exports = {
         const embed = new RichEmbed({
             title: "Help",
             color: parseInt("FF0000", 16),
-            description: commands.join("\n"),
+            description: STRINGS.HELP.join("\n"),
             url: "https://dupbit.com/snitch"
         });
 

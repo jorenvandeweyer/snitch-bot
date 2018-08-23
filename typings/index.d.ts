@@ -7,6 +7,12 @@ export interface Trigger {
     usersR: Array<string>;
 }
 
+declare global {
+    interface String {
+        complete(...args: Array<string>): string;
+    }
+}
+
 declare module "discord.js" {
     interface Message {
         command: {

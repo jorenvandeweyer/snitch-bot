@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 
 const cache = require("../utils/cache");
+const STRINGS = require("../strings/index");
 
 module.exports = {
     name: "add",
@@ -13,15 +14,15 @@ module.exports = {
         const keyword = msg.command.params[0].toLowerCase();
 
         if (keyword.length >= 99) {
-            return msg.channel.send("Your word can't exceed the 99 character limit");
+            return msg.channel.send(STRINGS.COMMAND_ADD_ERROR_MAX_LENGTH);
         }
 
         let result = await cache.setTrigger(guild, user, keyword, false);
 
         if (result.added) {
-            await msg.channel.send(`Added the word **${keyword}** succesfully`);
+            await msg.channel.send(STRINGS.COMMAND_ADD_SUCCESS.complete(keyword));
         } else if (result.exists) {
-            await msg.channel.send(`The word **${keyword}** is already in your trigger list`);
+            await msg.channel.send(STRINGS.COMMAND_ADD_ERROR_EXISTS.complete(keyword));
         }
     }
 };

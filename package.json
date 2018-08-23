@@ -19,7 +19,12 @@
     "jest": "^23.5.0"
   },
   "scripts": {
-    "start": "nodemon src/index.js",
+    "compile": "tsc -p . && cp config.json build/",
+    "clean": "rm -rf build/",
+
+    "prestart": "npm run compile",
+    "start": "nodemon",
+    "pretest": "npm run compile",
     "test": "jest"
   },
   "repository": {

@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
-const MessageHandler = require("./utils/listeners/messageHandler");
-const ReactionHandler = require("./utils/listeners/reactionHandler");
-const MemberHandler = require("./utils/listeners/memberHandler");
+const message = require("./utils/listeners/message");
+const messageReactionAdd = require("./utils/listeners/messageReactionAdd");
+const guildMemberRemove = require("./utils/listeners/guildMemberRemove");
+const guildDelete = require("./utils/listeners/guildDelete");
 const extend = require("./utils/extend");
 const Logger = require("./utils/logger");
 const discordbots = require("./utils/discordbots");
@@ -22,9 +23,10 @@ client.on("ready", () => {
     });
 });
 
-client.on("message", MessageHandler);
-client.on("messageReactionAdd", ReactionHandler);
-client.on("guildMemberRemove", MemberHandler);
+client.on("message", message);
+client.on("messageReactionAdd", messageReactionAdd);
+client.on("guildMemberRemove", guildMemberRemove);
+client.on("guildDelete", guildDelete);
 
 client.on("error", (e: Error) => Logger.error(`Shard[${client.shard.id}]:Client error: ${e.message}`));
 

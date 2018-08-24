@@ -144,6 +144,10 @@ async function allIgnores() {
     return await query("SELECT guilds.guild, U1.user, U2.user AS `ignore` FROM ignores INNER JOIN guilds ON guilds.guild_id=ignores.guild_id INNER JOIN users AS U1 ON U1.user_id=ignores.user_id INNER JOIN users AS U2 ON U2.user_id=ignores.ignore");
 }
 
+async function delGuild(guild: string) {
+    return await query("DELETE FROM guilds WHERE guild=?", [guild]);
+}
+
 // async function getMagnitudeKeywords() {
 //     return await query("SELECT keyword, COUNT(*) AS magnitude FROM triggers INNER JOIN keywords ON triggers.keyword_id = keywords.keyword_id GROUP BY triggers.keyword_id ORDER BY magnitude DESC");
 // }
@@ -162,4 +166,5 @@ module.exports = {
     delIgnore,
     delIgnoresOf,
     allIgnores,
+    delGuild,
 };

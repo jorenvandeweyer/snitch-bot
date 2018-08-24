@@ -158,6 +158,16 @@ async function delIgnoresOf(guild:string, user:string) {
     }
 }
 
+async function delGuild(guild: string) {
+    db.delGuild(guild);
+    if (triggers.has(guild)) {
+        triggers.delete(guild);
+    }
+    if (ignores.has(guild)) {
+        ignores.delete(guild);
+    }
+}
+
 async function build(guilds:Discord.Collection<string, Discord.Guild>) {
     const table = await db.allTriggers();
     for (let i = 0; i < table.length; i++) {
@@ -238,4 +248,5 @@ module.exports = {
     delIgnore,
     delIgnoresOf,
     ignores,
+    delGuild,
 };

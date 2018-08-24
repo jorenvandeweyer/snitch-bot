@@ -84,6 +84,6 @@ test("upload to influx", async () => {
             resolve();
         }, 50);
     });
-    console.log(writePoints.mock.calls[0][0]);
+    // console.log(writePoints.mock.calls[0][0]);
     expect(writePoints).toBeCalled();
 });

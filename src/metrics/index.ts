@@ -109,7 +109,6 @@ module.exports.Metrics = (manager:ShardingManager) => {
         const heartbeats = manager.broadcastEval("this.pings[0]");
 
         const result = await query("SELECT (SELECT COUNT(DISTINCT user_id) FROM triggers) as unique_users, (SELECT COUNT(DISTINCT user_id, guild_id) FROM triggers) as users, (SELECT COUNT(*) FROM triggers) as triggers, (SELECT COUNT(DISTINCT keyword_id) FROM triggers) as words").then((result:any) => result[0]);
-
         client.writePoints([
             {
                 measurement: "heartbeat",

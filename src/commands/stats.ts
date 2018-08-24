@@ -2,6 +2,7 @@ import { Message } from "discord.js";
 
 const db = require("../utils/database");
 const { RichEmbed } = require("discord.js");
+const STRINGS = require("../strings/index");
 
 module.exports = {
     name: "stats",
@@ -15,22 +16,22 @@ module.exports = {
         const guilds = await shard.broadcastEval("this.guilds.size").then(guilds => guilds.reduce((total:number, num:number) => total + num));
 
         const embed = new RichEmbed({
-            title: "💾 Stats 💾",
+            title: STRINGS.C_STATS_TITLE,
             color: parseInt("FF0000", 16),
             fields: [
                 {
-                    name: "💥 Triggers 💥",
-                    value: `Listening to **${result[0].total}** triggers!`,
+                    name: STRINGS.C_STATS_TITLE_TRIGGERS,
+                    value: STRINGS.C_STATS_CONTENT_TRIGGERS.complete(result[0].total),
                     inline: true,
                 },
                 {
-                    name: "👥 Guilds 👥",
-                    value: `Listening in **${guilds}** guilds!`,
+                    name: STRINGS.C_STATS_TITLE_GUILDS,
+                    value: STRINGS.C_STATS_CONTENT_GUILDS.complete(guilds),
                     inline: true,
                 },
                 {
-                    name: "👤 Users 👤",
-                    value: `Listening to **${members}** users!`,
+                    name: STRINGS.C_STATS_TITLE_USERS,
+                    value: STRINGS.C_STATS_CONTENT_USERS.complete(members),
                     inline: false,
                 },
             ]

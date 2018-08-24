@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 
 const cache = require("../utils/cache");
+const STRINGS = require("../strings/index");
 
 module.exports = {
     name: "removeregex",
@@ -16,9 +17,9 @@ module.exports = {
         let result = await cache.delTrigger(guild, user, keyword, true);
 
         if (result.deleted) {
-            await msg.channel.send(`Removed the RegExp **${keyword}** succesfully`);
+            await msg.channel.send(STRINGS.C_REMOVEREGEX_SUCCESS.complete(keyword));
         } else {
-            await msg.channel.send(`The RegExp **${keyword}** is not on your trigger list`);
+            await msg.channel.send(STRINGS.C_REMOVEREGEX_E_NOT_LISTED.complete(keyword));
         }
     }
 };

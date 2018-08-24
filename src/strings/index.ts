@@ -19,9 +19,24 @@ const STRINGS: { [s: string]: string|string[] } = {
     C_ADDREGEX_E_MATCHES: "The RegExp `{{}}` matches to much cases and got flagged as malicious, " + this.FALSE_POSITIVE,
     C_IGNORE_SUCCESS: "Ignoring **{{}}**",
     C_IGNORE_E_DUPLICATE: "You are already ignoring **{{}}**",
+    C_LIST_SUCCESS: "**List of your triggers:**\n{{}}{{}}",
+    C_LIST_E_EMPTY: "You don't have any triggers",
+    C_REMOVE_SUCCESS: "Removed the word **{{}}** succesfully",
+    C_REMOVE_E_NOT_LISTED: "The word **{{}}** is not on your trigger list",
+    C_REMOVEALL_SUCCESS: "All your triggers and ignores are reset",
+    C_REMOVEREGEX_SUCCESS: "Removed the RegExp **{{}}** succesfully",
+    C_REMOVEREGEX_E_NOT_LISTED: "The RegExp **{{}}** is not on your trigger list",
+    C_STATS_TITLE: "💾 Stats 💾",
+    C_STATS_TITLE_TRIGGERS: "💥 Triggers 💥",
+    C_STATS_CONTENT_TRIGGERS: "Listening to **{{}}** triggers!",
+    C_STATS_TITLE_GUILDS: "👥 Guilds 👥",
+    C_STATS_CONTENT_GUILDS: "Listening in **{{}}** guilds!",
+    C_STATS_TITLE_USERS: "👤 Users 👤",
+    C_STATS_CONTENT_USERS: "Listening to **{{}}** users!",
     C_UNIGNORE_SUCCESS: "You unignored **{{}}**",
     C_UNIGNORE_E_NOT_LISTED: "You are not ignoring **{{}}**",
     INVALID_MEMBER: "This is not a valid member",
+    INVITE_URL: "[click to invite me](https://discordapp.com/oauth2/authorize?client_id={{}}&permissions=67497024&scope=bot)",    
     HELP: [
         "**listen!add [word]**",
         "**listen!remove [word]**",
@@ -41,7 +56,7 @@ const STRINGS: { [s: string]: string|string[] } = {
         "",
         "Alternative prefixes",
         "`l!`, `listen!`"
-    ]
+    ],
 };
 
 module.exports = STRINGS;

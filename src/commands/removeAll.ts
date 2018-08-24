@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 
 const cache = require("../utils/cache");
+const STRINGS = require("../strings/index");
 
 module.exports = {
     name: "removeall",
@@ -14,6 +15,6 @@ module.exports = {
         cache.delTriggersOf(guild, user);
         cache.delIgnoresOf(guild, user);
 
-        msg.channel.send("All your triggers and ignores are reset");
+        msg.channel.send(STRINGS.C_REMOVEALL_SUCCESS);
     }
 };

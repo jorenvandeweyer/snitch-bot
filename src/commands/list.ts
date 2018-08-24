@@ -3,6 +3,7 @@ import { DBRowIgnores, DBRowTriggers } from "typings";
 
 const cache = require("../utils/cache");
 const member = require("../utils/extractors/member");
+const STRINGS = require("../strings/index");
 
 module.exports = {
     name: "list",
@@ -21,13 +22,12 @@ module.exports = {
         }
 
         if (triggers.length) {
-            await msg.member.send(`**List of your triggers:**\n${
-                triggers.map((row:DBRowTriggers) => "`" + row.keyword + "`" + (row.regex ? "  (R)" : "")).join("\n")
-            }${
+            await msg.member.send(STRINGS.C_LIST_SUCCESS.complete(
+                triggers.map((row:DBRowTriggers) => "`" + row.keyword + "`" + (row.regex ? "  (R)" : "")).join("\n"),
                 ignores.length ? `\n\n**Ignoring**:\n${ignores.map((member:GuildMember) => member.user.tag).join("\n")}` : ""
-            }`);
+            ));
         } else {
-            await msg.member.send("You don't have any triggers");
+            await msg.member.send(STRINGS.C_LIST_E_EMPTY);
         }
     }
 };

@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
 
 const { RichEmbed } = require("discord.js");
+const STRINGS = require("../strings/index");
 
 module.exports = {
     name: "invite",
@@ -10,7 +11,7 @@ module.exports = {
         const embed = new RichEmbed({
             title: "Invite",
             color: parseInt("FF0000", 16),
-            description: `[click to invite me](https://discordapp.com/oauth2/authorize?client_id=${msg.client.user.id}&permissions=67497024&scope=bot)`
+            description: STRINGS.INVITE_URL.complete(msg.client.user.id)
         });
 
         msg.author.send(embed);

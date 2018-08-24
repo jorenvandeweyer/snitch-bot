@@ -46,7 +46,7 @@ it("test ignore command", async () => {
 
 });
 
-it("test ignore command", async () => {
+it("test ignore command duplicate", async () => {
     const user = "69";
 
     cache.setIgnore.mockImplementationOnce(() => {

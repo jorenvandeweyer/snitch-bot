@@ -25,7 +25,7 @@
     "prestart": "npm run compile",
     "start": "nodemon",
     "pretest": "npm run compile",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "repository": {
     "type": "git",

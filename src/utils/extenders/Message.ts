@@ -1,6 +1,5 @@
 import { Trigger } from "typings";
 
-const EventEmitter = require("events");
 const { RichEmbed } = require("discord.js");
 const commands = require("../commands");
 const Cache = require("../cache");
@@ -9,7 +8,6 @@ const Logger = require("../logger");
 const prefixes = ["listen!", "l!"];
 
 module.exports.isCommand = async function() {
-    this.eventEmitter = new EventEmitter();
     this.prefix = startsWithPrefix(this.content.toLowerCase());
     if (this.prefix) {
         this.command = {};
@@ -22,6 +20,8 @@ module.exports.isCommand = async function() {
         } else {
             this.command = false;
         }
+    } else {
+        this.command = false;
     }
 
     if (this.command) {
@@ -32,9 +32,8 @@ module.exports.isCommand = async function() {
 };
 
 module.exports.search = function() {
-    const guild = this.channel.guild;
-
     if (this.channel.type !== "text") return;
+    const guild = this.guild;
 
     const list = Cache.triggers.get(guild.id);
 
@@ -106,8 +105,6 @@ module.exports.search = function() {
                 });
             }
         });
-
-        this.eventEmitter.emit("finished");
     });
 };
 

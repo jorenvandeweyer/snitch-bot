@@ -1,0 +1,10 @@
+{
+    "watch": [
+        "*"
+    ],
+    "ext": "ts",
+    "ignore": [
+        "test/"
+    ],
+    "exec": "tsc && node build/src/index.js"
+}

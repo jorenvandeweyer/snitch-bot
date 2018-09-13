@@ -169,7 +169,7 @@ async function delGuild(guild: string) {
 }
 
 async function flush() {
-    triggers.sweep(() => true));
+    triggers.sweep(() => true);
 }
 
 async function build(guilds:Discord.Collection<string, Discord.Guild>) {

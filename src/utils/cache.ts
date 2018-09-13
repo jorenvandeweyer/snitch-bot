@@ -168,7 +168,12 @@ async function delGuild(guild: string) {
     }
 }
 
+async function flush() {
+    triggers.sweep(() => true));
+}
+
 async function build(guilds:Discord.Collection<string, Discord.Guild>) {
+    flush();
     const table = await db.allTriggers();
     for (let i = 0; i < table.length; i++) {
         const row = table[i];

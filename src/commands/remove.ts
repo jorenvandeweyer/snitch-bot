@@ -11,7 +11,7 @@ module.exports = {
     async execute (msg: Message) {
         const guild = msg.guild.id;
         const user = msg.author.id;
-        const keyword = msg.command.params[0].toLowerCase();
+        const keyword = msg.command.params.join(" ").toLowerCase();
 
         let result = await cache.delTrigger(guild, user, keyword, false);
 

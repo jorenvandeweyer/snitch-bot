@@ -11,7 +11,7 @@ module.exports = {
     async execute (msg: Message) {
         const guild = msg.guild.id;
         const user = msg.author.id;
-        const keyword = msg.command.params[0].toLowerCase();
+        const keyword = msg.command.params.join(" ").toLowerCase();
 
         if (keyword.length >= 99) {
             return msg.channel.send(STRINGS.C_ADD_E_LENGTH);

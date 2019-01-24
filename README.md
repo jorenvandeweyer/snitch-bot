@@ -9,7 +9,7 @@ Word Notifications with emoji support and **RegExp**! 😱🎉.
 
 Go **directly** to this particular message with **one click**!
 
-![Notification](https://i.am-a.ninja/a0214c.png)
+![Notification](https://i.am-a.ninja/d503fa.png)
 
 This bot will notify you in a direct message when someone said a certain word.
 

@@ -81,7 +81,7 @@ module.exports.search = function() {
                         let messageContent = `**${this.author.tag}** mentioned the ${test.isRegex ? "RegExp": "word"} **${keyword}** in **${this.channel}** (${guild.name})`;
                         messageContent += `\n\n\`${this.content.replace(/`/g, "").slice(0, 1000)}\``;
                         messageContent += `\n\n**Go to channel:** ${this.channel}`;
-                        messageContent += `\n\n**Jump to message:**\nhttps://discordapp.com/channels/${guild.id}/${this.channel.id}/${this.id}`;
+                        messageContent += `\n\n[Click to jump to message](https://discordapp.com/channels/${guild.id}/${this.channel.id}/${this.id})`;
                         messageContent += `\n\n**React with ❌ to remove:** \`${keyword}\``;
 
                         const embed = new RichEmbed({

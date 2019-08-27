@@ -8,7 +8,7 @@ module.exports = {
     guildOnly: true,
     usage: "[word]",
     args: 1,
-    vote: true,
+    vote: false,
     async execute (msg: Message) {
         const guild = msg.guild.id;
         const user = msg.author.id;

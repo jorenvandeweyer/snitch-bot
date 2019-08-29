@@ -30,7 +30,7 @@ it("test remove command", async () => {
     expect(msg.channel.send).toHaveBeenCalledWith(STRINGS.C_REMOVE_SUCCESS.complete(keyword));
     
     expect(cache.delTrigger).toHaveBeenCalledTimes(1);
-    expect(cache.delTrigger).toHaveBeenCalledWith("0", "1", keyword, false);
+    expect(cache.delTrigger).toHaveBeenCalledWith(msg.guild.id, msg.author.id, keyword, false);
 });
 
 it("test remove command not listed", async () => {
@@ -53,7 +53,7 @@ it("test remove command not listed", async () => {
     expect(msg.channel.send).toHaveBeenCalledWith(STRINGS.C_REMOVE_E_NOT_LISTED.complete(keyword));
 
     expect(cache.delTrigger).toHaveBeenCalledTimes(1);
-    expect(cache.delTrigger).toHaveBeenCalledWith("0", "1", keyword, false);
+    expect(cache.delTrigger).toHaveBeenCalledWith(msg.guild.id, msg.author.id, keyword, false);
 });
 
 export {};

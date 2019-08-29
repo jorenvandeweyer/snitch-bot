@@ -26,10 +26,10 @@ it("test remove command", async () => {
     expect(msg.channel.send).toHaveBeenCalledWith(STRINGS.C_REMOVEALL_SUCCESS);
     
     expect(cache.delTriggersOf).toHaveBeenCalledTimes(1);
-    expect(cache.delTriggersOf).toHaveBeenCalledWith("0", "1");
+    expect(cache.delTriggersOf).toHaveBeenCalledWith(msg.guild.id, msg.author.id);
 
     expect(cache.delIgnoresOf).toHaveBeenCalledTimes(1);
-    expect(cache.delIgnoresOf).toHaveBeenCalledWith("0", "1");
+    expect(cache.delIgnoresOf).toHaveBeenCalledWith(msg.guild.id, msg.author.id);
 });
 
 export {};

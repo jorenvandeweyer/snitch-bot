@@ -1,12 +1,13 @@
 const { Collection } = require("discord.js");
 
-const { isCommand, search } = require("../../../src/utils/extenders/Message");
 const database = require("../../../src/utils/database");
 const cache = require("../../../src/utils/cache");
-const commands = require("../../../src/utils/commands");
+
+const msg = require("../../__mocks__/Message");
 
 jest.mock("../../../src/utils/database");
 jest.mock("../../../src/utils/commands");
+
 console.log = jest.fn();
 
 beforeAll(async () => {
@@ -34,51 +35,6 @@ beforeAll(async () => {
 beforeEach(async () => {
     msg.guild.members.get("1").send.mockClear();
 });
-
-const msg = {
-    id: "3",
-    client: {
-        metrics: {
-            incH: jest.fn(),
-        },
-        shard: {
-            id: 0
-        }
-    },
-    author: {
-        id: "0",
-        tag: "SENDER#0000",
-    },
-    content: "",
-    prefix: "",
-    channel: {
-        id: "2",
-        type: "text",
-    },
-    member: {
-        id: "3",
-    },
-    guild: {
-        id: "10",
-        fetchMember: jest.fn(),
-        members: new Collection([["1", {
-            permissionsIn: jest.fn().mockReturnValue(new Collection([["VIEW_CHANNEL", {}]])),
-            send: jest.fn().mockImplementationOnce(() => {
-                return Promise.resolve({
-                    react: jest.fn(),
-                });
-            }),
-            user: {
-                tag: "RECEIVER#0000"
-            },
-        }]])
-    },
-    isCommand,
-    search,
-    command: {
-        name: ""   
-    },
-};
 
 test("iscommand", async () => {
     const m = await {

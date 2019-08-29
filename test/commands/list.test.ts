@@ -6,9 +6,6 @@ jest.mock("../../src/utils/cache");
 jest.mock("../../src/utils/extractors/member");
 
 const msg = require("../__mocks__/Message");
-msg.member = {
-    send: jest.fn(),
-};
 
 beforeEach(() => {
     msg.member.send.mockClear();
@@ -57,11 +54,11 @@ it("test list command", async () => {
     // expect(msg.member.send).toHaveBeenCalledWith(STRINGS.C_LIST_SUCCESS);
 
     expect(cache.getTriggers).toHaveBeenCalledTimes(1);
-    expect(cache.getTriggers).toHaveBeenCalledWith("0", "1");
+    expect(cache.getTriggers).toHaveBeenCalledWith(msg.guild.id, msg.author.id);
 
 
     expect(cache.getIgnores).toHaveBeenCalledTimes(1);
-    expect(cache.getIgnores).toHaveBeenCalledWith("0", "1");
+    expect(cache.getIgnores).toHaveBeenCalledWith(msg.guild.id, msg.author.id);
 });
 
 it("test list command empty", async () => {
@@ -95,11 +92,11 @@ it("test list command empty", async () => {
     expect(msg.member.send).toHaveBeenCalledWith(STRINGS.C_LIST_E_EMPTY);
 
     expect(cache.getTriggers).toHaveBeenCalledTimes(1);
-    expect(cache.getTriggers).toHaveBeenCalledWith("0", "1");
+    expect(cache.getTriggers).toHaveBeenCalledWith(msg.guild.id, msg.author.id);
 
 
     expect(cache.getIgnores).toHaveBeenCalledTimes(1);
-    expect(cache.getIgnores).toHaveBeenCalledWith("0", "1");
+    expect(cache.getIgnores).toHaveBeenCalledWith(msg.guild.id, msg.author.id);
 });
 
 export {};

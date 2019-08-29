@@ -30,7 +30,7 @@ it("test add command", async () => {
     expect(msg.channel.send).toHaveBeenCalledWith(STRINGS.C_ADD_SUCCESS.complete(keyword));
     
     expect(cache.setTrigger).toHaveBeenCalledTimes(1);
-    expect(cache.setTrigger).toHaveBeenCalledWith("0", "1", keyword, false);
+    expect(cache.setTrigger).toHaveBeenCalledWith(msg.guild.id, msg.author.id, keyword, false);
 });
 
 it("test add command already exists", async () => {
@@ -53,7 +53,7 @@ it("test add command already exists", async () => {
     expect(msg.channel.send).toHaveBeenCalledWith(STRINGS.C_ADD_E_DUPLICATE.complete(keyword));
 
     expect(cache.setTrigger).toHaveBeenCalledTimes(1);
-    expect(cache.setTrigger).toHaveBeenCalledWith("0", "1", keyword, false);
+    expect(cache.setTrigger).toHaveBeenCalledWith(msg.guild.id, msg.author.id, keyword, false);
 });
 
 it("test add command length", async () => {

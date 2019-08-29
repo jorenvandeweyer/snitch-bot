@@ -42,7 +42,7 @@ it("test ignore command", async () => {
     expect(msg.channel.send).toHaveBeenCalledWith(STRINGS.C_IGNORE_SUCCESS.complete("Ecstabis#0001"));
 
     expect(cache.setIgnore).toHaveBeenCalledTimes(1);
-    expect(cache.setIgnore).toHaveBeenCalledWith("0", "1", "69");
+    expect(cache.setIgnore).toHaveBeenCalledWith(msg.guild.id, msg.author.id, user);
 
 });
 
@@ -75,7 +75,7 @@ it("test ignore command duplicate", async () => {
     expect(msg.channel.send).toHaveBeenCalledWith(STRINGS.C_IGNORE_E_DUPLICATE.complete("Ecstabis#0001"));
 
     expect(cache.setIgnore).toHaveBeenCalledTimes(1);
-    expect(cache.setIgnore).toHaveBeenCalledWith("0", "1", "69");
+    expect(cache.setIgnore).toHaveBeenCalledWith(msg.guild.id, msg.author.id, user);
 
 });
 

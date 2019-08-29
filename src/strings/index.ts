@@ -36,7 +36,7 @@ const STRINGS: { [s: string]: string|string[] } = {
     C_UNIGNORE_SUCCESS: "You unignored **{{}}**",
     C_UNIGNORE_E_NOT_LISTED: "You are not ignoring **{{}}**",
     INVALID_MEMBER: "This is not a valid member",
-    INVITE_URL: "[click to invite me](https://discordapp.com/oauth2/authorize?client_id={{}}&permissions=67497024&scope=bot)",    
+    INVITE_URL: "[click to invite me](https://discordapp.com/oauth2/authorize?client_id={{}}&permissions=314432&scope=bot)",    
     HELP: [
         "**listen!add [word]**",
         "**listen!remove [word]**",

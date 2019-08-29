@@ -42,7 +42,7 @@ it("test ignore command", async () => {
     expect(msg.channel.send).toHaveBeenCalledWith(STRINGS.C_UNIGNORE_SUCCESS.complete("Ecstabis#0001"));
 
     expect(cache.delIgnore).toHaveBeenCalledTimes(1);
-    expect(cache.delIgnore).toHaveBeenCalledWith("0", "1", "69");
+    expect(cache.delIgnore).toHaveBeenCalledWith(msg.guild.id, msg.author.id, user);
 
 });
 
@@ -75,7 +75,7 @@ it("test ignore command not listed", async () => {
     expect(msg.channel.send).toHaveBeenCalledWith(STRINGS.C_UNIGNORE_E_NOT_LISTED.complete("Ecstabis#0001"));
 
     expect(cache.delIgnore).toHaveBeenCalledTimes(1);
-    expect(cache.delIgnore).toHaveBeenCalledWith("0", "1", "69");
+    expect(cache.delIgnore).toHaveBeenCalledWith(msg.guild.id, msg.author.id, user);
 
 });
 

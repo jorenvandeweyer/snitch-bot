@@ -4,28 +4,27 @@
   "description": "A discord bot that listens for a string in a message a mentions you on a hit",
   "main": "src/index.js",
   "dependencies": {
-    "dblapi.js": "^2.2.0",
-    "discord.js": "^11.4.2",
-    "influx": "^5.0.7",
-    "mysql": "^2.16.0",
-    "nodemon": "^1.18.3",
+    "dblapi.js": "^2.3.0",
+    "discord.js": "^11.5.1",
+    "influx": "^5.4.0",
+    "mysql": "^2.17.1",
+    "nodemon": "^1.19.1",
     "request": "^2.88.0",
-    "safe-regex": "^1.1.0",
-    "typescript": "^3.0.1"
+    "safe-regex": "^2.0.2",
+    "typescript": "^3.6.2"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.1",
-    "@types/node": "^10.7.1",
-    "jest": "^23.5.0"
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.2",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.0.2"
   },
   "scripts": {
-    "compile": "tsc -p . && cp config.json build/",
+    "compile": "tsc -p .",
     "clean": "rm -rf build/",
-
     "prestart": "npm run compile",
     "start": "nodemon",
-    "pretest": "npm run compile",
-    "test": "jest --forceExit"
+    "test": "jest"
   },
   "repository": {
     "type": "git",

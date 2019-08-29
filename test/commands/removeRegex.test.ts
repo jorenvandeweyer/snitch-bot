@@ -30,7 +30,7 @@ it("test removeRegex command", async () => {
     expect(msg.channel.send).toHaveBeenCalledWith(STRINGS.C_REMOVEREGEX_SUCCESS.complete(keyword));
 
     expect(cache.delTrigger).toHaveBeenCalledTimes(1);
-    expect(cache.delTrigger).toHaveBeenCalledWith("0", "1", keyword, true);
+    expect(cache.delTrigger).toHaveBeenCalledWith(msg.guild.id, msg.author.id, keyword, true);
 });
 
 it("test removeRegex command not listed", async () => {
@@ -53,7 +53,7 @@ it("test removeRegex command not listed", async () => {
     expect(msg.channel.send).toHaveBeenCalledWith(STRINGS.C_REMOVEREGEX_E_NOT_LISTED.complete(keyword));
 
     expect(cache.delTrigger).toHaveBeenCalledTimes(1);
-    expect(cache.delTrigger).toHaveBeenCalledWith("0", "1", keyword, true);
+    expect(cache.delTrigger).toHaveBeenCalledWith(msg.guild.id, msg.author.id, keyword, true);
 });
 
 export {};

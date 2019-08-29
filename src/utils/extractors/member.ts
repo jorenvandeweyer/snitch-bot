@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
 
-module.exports = async (msg:Message, str={}) => {
+module.exports = async (msg:Message, str:string|undefined) => {
     if (typeof str === "string") {
         if (msg.guild.members.has(str)) return msg.guild.members.get(str);
         return await msg.guild.fetchMember(str).catch(() => null);

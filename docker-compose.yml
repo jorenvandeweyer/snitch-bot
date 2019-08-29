@@ -2,9 +2,10 @@ version: "3"
 services:
   snitch:
     build: .
+    env_file:
+      - ./.env
     volumes:
       - ./src/:/usr/src/app/src/
-      - ./config.json:/usr/src/app/config.json
     restart: always
     networks:
       - dupbit_prime

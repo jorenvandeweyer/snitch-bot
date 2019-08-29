@@ -3,13 +3,11 @@ import { DBConnection, DBResult } from "typings";
 const mysql = require("mysql");
 const Logger = require("./logger");
 
-const { mysql_host, mysql_user, mysql_pswd, mysql_db} = require("../../config.json");
-
 const pool = mysql.createPool({
-    host: mysql_host,
-    user: mysql_user,
-    password: mysql_pswd,
-    database: mysql_db,
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DB,
     charset : "utf8mb4"
 });
 
@@ -43,8 +41,8 @@ function query(query:string, options:Array<string|boolean>=[]): Promise<DBResult
 }
 
 async function setup() {
-    let result = await query("CREATE DATABASE IF NOT EXISTS listen_bot;");
-    if (result && !result.warningCount) Logger.info("[db]Created Database \"listen_bot\"");
+    let result = await query("CREATE DATABASE IF NOT EXISTS snitch;");
+    if (result && !result.warningCount) Logger.info("[db]Created Database \"snitch\"");
 
     result = await query("CREATE TABLE IF NOT EXISTS guilds (`guild_id` INT UNSIGNED AUTO_INCREMENT, `guild` VARCHAR(32) UNIQUE, PRIMARY KEY (`guild_id`))");
     if (result && !result.warningCount) Logger.info("[db]Created table \"guilds\"");
@@ -152,7 +150,7 @@ async function delGuild(guild: string) {
 //     return await query("SELECT keyword, COUNT(*) AS magnitude FROM triggers INNER JOIN keywords ON triggers.keyword_id = keywords.keyword_id GROUP BY triggers.keyword_id ORDER BY magnitude DESC");
 // }
 
-setup();
+// setup();
 
 module.exports = {
     query,
@@ -167,4 +165,5 @@ module.exports = {
     delIgnoresOf,
     allIgnores,
     delGuild,
+    setup,
 };

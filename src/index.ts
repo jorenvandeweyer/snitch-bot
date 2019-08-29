@@ -1,12 +1,11 @@
 import { Shard, Message } from "discord.js";
 
 const { ShardingManager } = require("discord.js");
-const { token } = require("../config.json");
 const Logger = require("./utils/logger");
 const { Metrics } = require("./metrics/index");
 
 const manager = new ShardingManager("./build/src/shard.js", {
-    token,
+    token: process.env.TOKEN,
 });
 
 Metrics(manager);

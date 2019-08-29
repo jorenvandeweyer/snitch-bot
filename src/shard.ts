@@ -9,6 +9,8 @@ const discordbots = require("./utils/discordbots");
 const { ShardMetrics } = require("./metrics/index");
 const Cache = require("./utils/cache");
 
+require('./utils/database').setup();
+
 const client = new Discord.Client();
 client.metrics = ShardMetrics();
 

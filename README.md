@@ -29,6 +29,10 @@ Every time someone says the word "cookie", the bot will send you a DM with the f
 
 `listen!removeRegex [regexp]`: Remove a regExp from your trigger list
 
+`listen!wait`: Waits in a channel untill someone sends a messages, the bot will send you a notification
+
+`listen!wait`: Stop waiting for messages in a channel
+
 `listen!list`: Show all triggers in your trigger list
 
 `listen!help`: Gives you all available commands

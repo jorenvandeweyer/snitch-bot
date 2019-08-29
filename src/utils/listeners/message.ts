@@ -26,7 +26,7 @@ module.exports = async (msg: Message) => {
             msg.channel.send(`This command requires atleast ${msg.command.args} argument${msg.command.args === 1 ? "" : "s"}`);
 
         }
-    }
-
-    if (!(msg.channel.type !== "text")) msg.search();
+    } else if(!(msg.channel.type !== "text")) {
+        msg.search();
+    } 
 };

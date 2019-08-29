@@ -36,9 +36,31 @@ module.exports.search = function() {
     if (this.channel.type !== "text") return;
     const guild = this.guild;
 
-    const list = Cache.triggers.get(guild.id);
+    const waiting = Cache.waiting.get(this.channel.id);
+    
+    waiting && Cache.delWaitersIn(this.channel.id);
+    waiting && waiting.forEach(async (member: GuildMember) => {
+        let messageContent = `\`${this.content.replace(/`/g, "").slice(0, 1000)}\``;
+        messageContent += `\n\n[Click to jump to message](https://discordapp.com/channels/${guild.id}/${this.channel.id}/${this.id})`;
+        messageContent += `\n\n**Go to channel:** ${this.channel}`;
 
-    list && list.forEach((trigger: Trigger, keyword: string) => {
+        const embed = new RichEmbed({
+            title: `There is a reaction in a channel(${this.channel.name}) you were waiting in.`,
+            description: messageContent,
+            color: parseInt("0000FF", 16),
+            timestamp: this.createdAt,
+        });
+
+        try {
+            await member.send(embed);
+        } catch (e) {
+            console.log(e);
+        }
+    }) 
+    
+    const triggers = Cache.triggers.get(guild.id);
+
+    triggers && triggers.forEach((trigger: Trigger, keyword: string) => {
         const arr = [];
         if (trigger.word) {
             arr.push({

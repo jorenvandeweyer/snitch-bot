@@ -6,6 +6,40 @@ const { Collection } = require("discord.js");
 
 const triggers = new Collection();
 const ignores = new Collection();
+const waiting = new Collection();
+
+async function setWaiter(channel:string, member:Discord.GuildMember) {
+    if (!waiting.has(channel)) {
+        waiting.set(channel, []);
+    }
+
+    const waiters = waiting.get(channel);
+
+    if (waiters.includes(member)) return {exists: true};
+
+    waiters.push(member);
+    return {added: true};
+}
+
+async function delWaiter(channel:string, member:Discord.GuildMember) {
+    if (!waiting.has(channel)) return { deleted: false };
+
+    const waiters = waiting.get(channel);
+    
+    if (!waiters.includes(member)) return { deleted: false };
+
+    waiters.splice(waiters.indexOf(member), 1);
+
+    if (!waiters.length) waiting.delete(channel);
+
+    return {deleted: true};
+}
+
+async function delWaitersIn(channel: string) {
+    if (!waiting.has(channel)) return;
+
+    waiting.delete(channel);
+}
 
 async function setTrigger(guild:string, user:string, keyword:string, regex:boolean=false) {
     if (!triggers.has(guild)) {
@@ -253,5 +287,9 @@ module.exports = {
     delIgnore,
     delIgnoresOf,
     ignores,
+    setWaiter,
+    delWaiter,
+    delWaitersIn,
+    waiting,
     delGuild,
 };
